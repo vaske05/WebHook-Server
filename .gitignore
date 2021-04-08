@@ -44,7 +44,7 @@ nb-configuration.xml
 
 ## Directory-based project format:
 .idea/
-
+.mvn
 ## File-based project format:
 *.ipr
 *.iws
