@@ -113,3 +113,7 @@ logs/prod.out*
 
 #postman reports
 tests/postman/newman-report.*
+
+#Random
+*/target/*
+*/target/**
