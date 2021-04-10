@@ -117,3 +117,5 @@ tests/postman/newman-report.*
 #Random
 */target/*
 */target/**
+
+/target/
