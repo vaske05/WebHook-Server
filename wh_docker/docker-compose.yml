@@ -1,39 +1,3 @@
-#version: '3'
-#services:
-#  mysql:
-#    image: 'mysql:5.7'
-##    environment:
-##      - MYSQL_ROOT_PASSWORD=milanv
-##      - MYSQL_PASSWORD=milan123
-##      - MYSQL_DATABASE=wh_mysql_db
-#    command: --init-file /docker-entrypoint-initdb.d/init.sql
-#    volumes:
-#      - mysql_db:/var/lib/mysql
-#      - "${MYSQL_INIT_SCHEMA}:/docker-entrypoint-initdb.d/init.sql"
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
-#    ports:
-#      - "3307:3307"
-#  wh_springboot-docker-container:
-#    image: springboot-docker-container
-#    ports:
-#      - ${HTTP_PORT}:8081
-#      - ${DEBUG_PORT}:8001
-#    environment:
-##      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/wh_mysql_db?autoReconnect=true&useSSL=false
-##      SPRING_DATASOURCE_USERNAME: "milanv"
-##      SPRING_DATASOURCE_PASSWORD: "milan123"
-#      - JDBC_URL=jdbc:mysql://mysql:3307/
-#      - JDBC_USERNAME=${MYSQL_USERNAME}
-#      - JDBC_PASSWORD=${MYSQL_PASSWORD}
-#    build:
-#      dockerfile: ${DOCKERFILE_LOCATION}
-#      context: ${ROOT_LOCATION}
-#    depends_on:
-#      - mysql
-#volumes:
-#  mysql_db:
-
 version: '3'
 services:
   mysql:

@@ -1,6 +1,7 @@
 package com.elfak.whserver.model;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,8 +13,9 @@ import java.util.List;
 @Table(name = "user")
 public class User implements Serializable {
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "email", nullable = false)
