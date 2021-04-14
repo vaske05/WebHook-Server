@@ -88,7 +88,6 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.4.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:5.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.5" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:5.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.18" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:2.4.4" level="project" />
@@ -132,5 +131,9 @@
     <orderEntry type="library" name="Maven: com.neovisionaries:nv-i18n:1.28" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.23" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.h2database:h2:1.4.200" level="project" />
+    <orderEntry type="library" name="Maven: org.liquibase:liquibase-core:3.10.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
   </component>
 </module>

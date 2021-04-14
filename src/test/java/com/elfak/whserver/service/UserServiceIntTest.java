@@ -17,8 +17,7 @@ public class UserServiceIntTest extends IntegrationTestPrototype  {
         User user = new User();
         String email = "vaske494@gmail.com";
         user.setEmail(email);
-        user.setFirstName("Milan");
-        user.setLastName("Vasic");
+        user.setFullName("Milan Vasic");
         user.setPassword("Milan994!");
         // Then
         userService.saveUser(user);

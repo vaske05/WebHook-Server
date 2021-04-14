@@ -17,14 +17,12 @@ public class UserRepositoryUnitTest extends IntegrationTestPrototype{
         User user = new User();
         String email = "vaske494@gmail.com";
         user.setEmail(email);
-        user.setFirstName("Milan");
-        user.setLastName("Vasic");
+        user.setFullName("Milan Vasic");
         user.setPassword("Milan994!");
         // When
         userRepository.save(user);
         // Then
         User savedUser = userRepository.findUserByEmail(email).orElseThrow();
         Assert.assertEquals(savedUser.getEmail(), email);
-
     }
 }

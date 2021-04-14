@@ -15,8 +15,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id")
-    Long id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -24,12 +24,12 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "secret_key")
+    private String secretKey;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "full_name")
+    private String fullName;
 
     @OneToMany(cascade = CascadeType.REFRESH, orphanRemoval = true, mappedBy = "user")
-    List<WebHook> webHooks = new ArrayList<>();
+    private List<WebHook> webHooks = new ArrayList<>();
 }

@@ -11,14 +11,12 @@ public class WebHook {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(name = "url")
-    String url;
+    private String url;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    User user;
-
-
+    private User user;
 }

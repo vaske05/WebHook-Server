@@ -10,5 +10,4 @@ public class WhserverApplication {
     public static void main(String[] args) {
         SpringApplication.run(WhserverApplication.class, args);
     }
-
 }
