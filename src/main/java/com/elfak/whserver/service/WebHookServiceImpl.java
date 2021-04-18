@@ -19,6 +19,7 @@ public class WebHookServiceImpl implements WebHookService {
     }
 
     @Override
+    @Transactional
     public WebHook findByUrl(String url) {
         return webHookRepository.findWebHookByUrl(url).orElseThrow();
     }
