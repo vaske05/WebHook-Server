@@ -8,6 +8,7 @@ import com.elfak.whserver.model.dto.CovidResponseDTO;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,9 +18,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class DataServiceImpl implements DataService {
 
-    public static final String GET_COVID_DATA_URL = "https://corona.lmao.ninja/v2/countries/";
-    public static final String GET_AIR_DATA_URL = "http://api.airvisual.com/v2/city";
     UrlHelper urlHelper;
+
+    @Value("${covid.data.url}")
+    private String GET_COVID_DATA_URL;
+    @Value("${air.data.url}")
+    private String GET_AIR_DATA_URL;
+    @Value("${air.data.key}")
+    private String AIR_DATA_KEY;
 
     public DataServiceImpl(UrlHelper urlHelper) {
         this.urlHelper = urlHelper;
@@ -59,7 +65,7 @@ public class DataServiceImpl implements DataService {
                     .queryParam("city", airQualityRequestDTO.getCity())
                     .queryParam("state", airQualityRequestDTO.getState())
                     .queryParam("country", airQualityRequestDTO.getCountry())
-                    .queryParam("key", "cf8b831a-eee3-42dd-ad9f-4f6d07f63161");
+                    .queryParam("key", AIR_DATA_KEY);
             String url = urlHelper.replaceStringOccurrence(uriBuilder.toUriString(), "%20", " ");
             ResponseEntity<AirQualityResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, AirQualityResponseDTO.class);
             if (!response.getStatusCode().is2xxSuccessful()) {
