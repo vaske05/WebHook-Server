@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -15,7 +19,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User user) {
+        user.setSecretKey(generateUserSecretKey());
         return userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
+    private String generateUserSecretKey() {
+        return Base64.getEncoder()
+                .encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

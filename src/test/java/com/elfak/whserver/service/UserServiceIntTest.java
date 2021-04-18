@@ -20,11 +20,29 @@ public class UserServiceIntTest extends IntegrationTestPrototype {
         user.setEmail(email);
         user.setFullName("Milan Vasic");
         user.setPassword("Milan994!");
-        // Then
+        // When
         userService.save(user);
-        //When
+        // Then
         User savedUser = userService.findByEmail(email);
         Assert.assertEquals(savedUser.getEmail(), email);
+        Assert.assertNotNull(savedUser.getSecretKey());
+
+    }
+
+    @Test
+    @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
+    public void testUpdateUser() {
+        // Given
+        User user = userService.findById(0L);
+        user.setFullName("Nikola Savic");
+        // When
+        User updatedUser = userService.update(user);
+        // Then
+        Assert.assertNotNull(updatedUser.getId());
+        Assert.assertEquals("Nikola Savic", updatedUser.getFullName());
+        Assert.assertEquals(user.getDecodedSecretKey(), "fc965557-e2b7-4fa3-82de-584b85e2f283");
+        Assert.assertFalse(updatedUser.getFullName().isEmpty());
+        Assert.assertFalse(updatedUser.getPassword().isEmpty());
     }
 
     @Test
@@ -36,6 +54,7 @@ public class UserServiceIntTest extends IntegrationTestPrototype {
         User user = userService.findByEmail(email);
         // Then
         Assert.assertEquals(user.getEmail(), email);
+        Assert.assertEquals(user.getDecodedSecretKey(), "fc965557-e2b7-4fa3-82de-584b85e2f283");
     }
 
     @Test

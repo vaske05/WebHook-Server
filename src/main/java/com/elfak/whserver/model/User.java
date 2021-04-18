@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -36,4 +37,9 @@ public class User implements Serializable {
 
     @OneToMany(cascade = CascadeType.REFRESH, orphanRemoval = true, mappedBy = "user")
     private List<WebHook> webHooks = new ArrayList<>();
+
+    public String getDecodedSecretKey() {
+        byte[] decodedSecretKey = Base64.getDecoder().decode(this.secretKey);
+        return new String(decodedSecretKey);
+    }
 }
