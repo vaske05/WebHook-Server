@@ -48,7 +48,7 @@ public class DataServiceImpl implements DataService {
                 return response.getBody();
             }
         } catch (Exception e) {
-            log.error("Unexpected Error: ", e);
+            log.error("Error in : " + this.clone().toString() + e.getMessage(), e);
             throw new Exception(e.getMessage());
         }
     }
