@@ -3,6 +3,7 @@ package com.elfak.whserver.service;
 import com.elfak.whserver.model.User;
 import com.elfak.whserver.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +16,19 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     @Transactional
     public User save(User user) {
+        //try {
         user.setSecretKey(generateUserSecretKey());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+//        } catch (Exception e) {
+//            throw new Exception("message");
+//        }
+
     }
 
     @Override
