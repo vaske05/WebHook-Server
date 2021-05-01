@@ -66,8 +66,6 @@ public class JwtTokenProvider {
         calendar.add(Calendar.HOUR, EXPIRATION_TIME_IN_HOURS);
         calendar.add(Calendar.MINUTE, EXPIRATION_TIME_IN_MINUTES);
         calendar.add(Calendar.SECOND, EXPIRATION_TIME_IN_SECONDS);
-
         return calendar.getTime();
     }
-
 }
