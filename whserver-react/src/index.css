@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.cardHead {
+  cursor: grab;
+}
+
+@media(min-height: 700px){
+  .statusDiv {
+    height: 100%;
+    /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);*/
+    transition: all 200ms ease-out;
+  }
+}
+
+.customShadow {
+  box-shadow: 0 0 6px rgba(35, 173, 255, 1);
+}
+
+.customShadowGrey {
+  box-shadow: 0 0 6px #6c757d;
+}
+
+.customShadowBlue {
+  box-shadow: 0 0 6px #007bff;
+}
+
+.customShadowGreen {
+  box-shadow: 0 0 6px #28a745;
+}
