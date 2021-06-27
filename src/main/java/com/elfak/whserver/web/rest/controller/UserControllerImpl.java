@@ -1,15 +1,26 @@
 package com.elfak.whserver.web.rest.controller;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.elfak.whserver.web.WebConstant;
+import com.elfak.whserver.facade.UserFacade;
+import com.elfak.whserver.facade.model.request.UserRequest;
+import com.elfak.whserver.facade.model.response.UserResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
-@RequestMapping(value = WebConstant.USER_BASE_URL, produces = APPLICATION_JSON_VALUE)
-public class UserControllerImpl {
+@RequiredArgsConstructor
+public class UserControllerImpl implements UserController {
 
+	private final UserFacade userFacade;
 
+	@Override
+	public ResponseEntity<UserResponse> createUser(UserRequest userRequest) {
+		// userFacade.createUser(userRequest);
+
+		return null;
+	}
 }

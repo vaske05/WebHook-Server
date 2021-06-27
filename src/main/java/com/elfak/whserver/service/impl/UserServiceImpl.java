@@ -1,15 +1,20 @@
-package com.elfak.whserver.service;
-
-import com.elfak.whserver.model.User;
-import com.elfak.whserver.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+package com.elfak.whserver.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.elfak.whserver.model.User;
+import com.elfak.whserver.repository.UserRepository;
+import com.elfak.whserver.service.UserService;
+import com.elfak.whserver.service.dto.UserRequestDTO;
+import com.elfak.whserver.service.dto.UserResponseDTO;
+
+import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
@@ -20,11 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(User user) {
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         //try {
-        user.setSecretKey(generateUserSecretKey());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRequestDTO.setSecretKey(generateUserSecretKey());
+        userRequestDTO.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
+        // return userRepository.save(user); TODO: Use mapper here
+        return null;
 //        } catch (Exception e) {
 //            throw new Exception("message");
 //        }
