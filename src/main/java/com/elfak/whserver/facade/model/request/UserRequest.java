@@ -1,12 +1,12 @@
 package com.elfak.whserver.facade.model.request;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -20,4 +20,6 @@ public class UserRequest {
 	private String email;
 	@NotNull
 	private String password;
+	@NotNull
+	private String confirmPassword;
 }
