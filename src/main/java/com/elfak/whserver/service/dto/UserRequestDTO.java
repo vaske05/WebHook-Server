@@ -1,7 +1,7 @@
 package com.elfak.whserver.service.dto;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,13 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequestDTO {
-	@NotNull
+	@NotBlank
 	private String fullName;
-	@NotNull
+	@NotBlank
 	@Email
 	private String email;
-	@NotNull
+	@NotBlank
 	private String password;
+	@NotBlank
+	private String confirmPassword;
 	@JsonIgnore
 	private String secretKey;
 }

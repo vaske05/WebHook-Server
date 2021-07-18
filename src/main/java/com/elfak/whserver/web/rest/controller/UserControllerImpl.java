@@ -1,13 +1,15 @@
 package com.elfak.whserver.web.rest.controller;
 
-import com.elfak.whserver.facade.UserFacade;
-import com.elfak.whserver.facade.model.request.UserRequest;
-import com.elfak.whserver.facade.model.response.UserResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.elfak.whserver.facade.UserFacade;
+import com.elfak.whserver.facade.model.request.UserRequest;
+import com.elfak.whserver.facade.model.response.UserResponse;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -18,8 +20,16 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	public ResponseEntity<UserResponse> createUser(UserRequest userRequest) {
-		userFacade.createUser(userRequest);
 
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		// Validate pass match
+//		userValidator.validate(user, bindingResult);
+//
+//		ResponseEntity<?> errorMap = errorService.validateFields(bindingResult);
+//		if(errorMap != null) {
+//			return errorMap;
+//		}
+
+		UserResponse userResponse = userFacade.createUser(userRequest);
+		return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
 	}
 }
