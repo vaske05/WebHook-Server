@@ -1,11 +1,14 @@
 package com.elfak.whserver.service;
 
-import com.elfak.whserver.IntegrationTestPrototype;
-import com.elfak.whserver.model.User;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
+
+import com.elfak.whserver.IntegrationTestPrototype;
+import com.elfak.whserver.exceptions.EmailUniqueException;
+import com.elfak.whserver.model.User;
+import com.elfak.whserver.service.dto.UserRequestDTO;
 
 public class UserServiceIntTest extends IntegrationTestPrototype {
 
@@ -13,20 +16,32 @@ public class UserServiceIntTest extends IntegrationTestPrototype {
     private UserService userService;
 
     @Test
-    public void testSaveUser() {
+    public void testCreateUser() {
         // Given
-        User user = new User();
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
         String email = "vaske494@gmail.com";
-        user.setEmail(email);
-        user.setFullName("Milan Vasic");
-        user.setPassword("Milan994!");
+        userRequestDTO.setEmail(email);
+        userRequestDTO.setFullName("Milan Vasic");
+        userRequestDTO.setPassword("Milan994!");
         // When
-        userService.save(user);
+        userService.createUser(userRequestDTO);
         // Then
         User savedUser = userService.findByEmail(email);
         Assert.assertEquals(savedUser.getEmail(), email);
         Assert.assertNotNull(savedUser.getSecretKey());
+    }
 
+    @Test
+    @Sql({"/sql/insert-users.sql"})
+    public void testEmailUniqueException() {
+        // Given
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
+        String email = "vaske@gmail.com";
+        userRequestDTO.setEmail(email);
+        userRequestDTO.setFullName("Milan Vasic");
+        userRequestDTO.setPassword("Milan994!");
+        // When, Then
+        Assert.assertThrows(EmailUniqueException.class, () -> userService.createUser(userRequestDTO));
     }
 
     @Test

@@ -1,10 +1,13 @@
-package com.elfak.whserver.service;
+package com.elfak.whserver.service.impl;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.elfak.whserver.model.WebHook;
 import com.elfak.whserver.repository.WebHookRepository;
+import com.elfak.whserver.service.WebHookService;
+
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor

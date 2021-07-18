@@ -1,10 +1,12 @@
 package com.elfak.whserver.service;
 
 import com.elfak.whserver.model.User;
+import com.elfak.whserver.service.dto.UserRequestDTO;
+import com.elfak.whserver.service.dto.UserResponseDTO;
 
 public interface UserService {
 
-    User save(User user);
+    UserResponseDTO createUser(UserRequestDTO userRequestDTO);
 
     User findByEmail(String email);
 
