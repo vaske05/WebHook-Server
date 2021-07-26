@@ -1,4 +1,4 @@
-package com.elfak.whserver.web.rest.controller;
+package com.elfak.whserver.web.rest.controller.impl;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.elfak.whserver.facade.UserFacade;
 import com.elfak.whserver.facade.model.request.UserRequest;
 import com.elfak.whserver.facade.model.response.UserResponse;
+import com.elfak.whserver.web.rest.controller.UserController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
