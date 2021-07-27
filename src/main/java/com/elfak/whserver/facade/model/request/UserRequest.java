@@ -1,25 +1,21 @@
 package com.elfak.whserver.facade.model.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class UserRequest {
-	@NotNull
+	@NotBlank(message = "Please enter your full name")
 	private String fullName;
-	@NotNull
-	@Email
+	@Email(message = "Email is not in valid format")
+	@NotBlank(message = "Please enter your email")
 	private String email;
-	@NotNull
+	@NotBlank(message = "Password field is required")
 	private String password;
-	@NotNull
+	@NotBlank
 	private String confirmPassword;
 }
