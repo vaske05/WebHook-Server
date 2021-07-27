@@ -1,10 +1,7 @@
 package com.elfak.whserver.web.rest.controller.impl;
 
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elfak.whserver.facade.UserFacade;
@@ -22,7 +19,7 @@ public class UserControllerImpl implements UserController {
 	private final UserFacade userFacade;
 
 	@Override
-	public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest, BindingResult bindingResult) {
+	public ResponseEntity<?> createUser(UserRequest userRequest, BindingResult bindingResult) {
 
 		return userFacade.createUser(userRequest, bindingResult);
 	}

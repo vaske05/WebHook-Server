@@ -1,12 +1,9 @@
 package com.elfak.whserver.facade.impl;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.elfak.whserver.facade.UserFacade;
 import com.elfak.whserver.facade.mapper.UserFacadeMapper;
@@ -30,7 +27,7 @@ public class UserFacadeImpl implements UserFacade {
 	private final ValidationErrorService errorService;
 
 	@Override
-	public ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest, BindingResult bindingResult) {
+	public ResponseEntity<?> createUser(UserRequest userRequest, BindingResult bindingResult) {
 
 		// Validate pass match
 		userValidator.validate(userRequest, bindingResult);
