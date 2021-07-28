@@ -7,10 +7,10 @@ import org.springframework.validation.BindingResult;
 
 import com.elfak.whserver.facade.UserFacade;
 import com.elfak.whserver.facade.mapper.UserFacadeMapper;
-import com.elfak.whserver.facade.model.request.UserRequest;
+import com.elfak.whserver.facade.model.request.UserRegistrationRequest;
 import com.elfak.whserver.service.UserService;
 import com.elfak.whserver.service.ValidationErrorService;
-import com.elfak.whserver.service.dto.UserRequestDTO;
+import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
 import com.elfak.whserver.validator.UserValidator;
 
 import lombok.RequiredArgsConstructor;
@@ -27,18 +27,19 @@ public class UserFacadeImpl implements UserFacade {
 	private final ValidationErrorService errorService;
 
 	@Override
-	public ResponseEntity<?> createUser(UserRequest userRequest, BindingResult bindingResult) {
+	public ResponseEntity<?> createUser(UserRegistrationRequest userRegistrationRequest, BindingResult bindingResult) {
 
 		// Validate pass match
-		userValidator.validate(userRequest, bindingResult);
+		userValidator.validate(userRegistrationRequest, bindingResult);
 
 		ResponseEntity<?> errorMap = errorService.validateFields(bindingResult);
 		if (errorMap != null) {
 			return errorMap;
 		}
 
-		UserRequestDTO userRequestDTO = mapper.userRequestToDto(userRequest);
+		UserRegistrationRequestDTO userRegistrationRequestDTO = mapper
+			.userRegistrationRequestToDto(userRegistrationRequest);
 		return new ResponseEntity<>(mapper
-			.userDtoToResponse(userService.createUser(userRequestDTO)), HttpStatus.CREATED);
+			.userRegistrationDtoToResponse(userService.createUser(userRegistrationRequestDTO)), HttpStatus.CREATED);
 	}
 }

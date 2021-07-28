@@ -4,13 +4,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.elfak.whserver.model.User;
-import com.elfak.whserver.service.dto.UserRequestDTO;
-import com.elfak.whserver.service.dto.UserResponseDTO;
+import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
+import com.elfak.whserver.service.dto.UserRegistrationResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserServiceMapper {
-    User userRequestDtoToUser(UserRequestDTO userRequestDTO);
+    User userRegistrationRequestDtoToUser(UserRegistrationRequestDTO userRegistrationRequestDTO);
 
     @Mapping(source = "id", target = "userId")
-    UserResponseDTO userToUserResponseDto(User user);
+    UserRegistrationResponseDTO userToUserRegistrationResponseDto(User user);
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequest {
+public class UserRegistrationRequest {
 	@NotBlank(message = "Please enter your full name")
 	private String fullName;
 	@Email(message = "Email is not in valid format")

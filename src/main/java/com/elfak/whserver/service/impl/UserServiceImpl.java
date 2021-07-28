@@ -12,8 +12,8 @@ import com.elfak.whserver.exceptions.EmailUniqueException;
 import com.elfak.whserver.model.User;
 import com.elfak.whserver.repository.UserRepository;
 import com.elfak.whserver.service.UserService;
-import com.elfak.whserver.service.dto.UserRequestDTO;
-import com.elfak.whserver.service.dto.UserResponseDTO;
+import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
+import com.elfak.whserver.service.dto.UserRegistrationResponseDTO;
 import com.elfak.whserver.service.mapper.UserServiceMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -30,17 +30,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+	public UserRegistrationResponseDTO createUser(UserRegistrationRequestDTO userRegistrationRequestDTO) {
 		try {
-			userRequestDTO.setSecretKey(generateUserSecretKey());
-			userRequestDTO.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
-			User user = mapper.userRequestDtoToUser(userRequestDTO);
+
+			userRegistrationRequestDTO.setSecretKey(generateUserSecretKey());
+
+			userRegistrationRequestDTO
+				.setPassword(bCryptPasswordEncoder.encode(userRegistrationRequestDTO.getPassword()));
+
+			User user = mapper.userRegistrationRequestDtoToUser(userRegistrationRequestDTO);
+
 			user = userRepository.save(user);
+
 			log.info("[ USER REGISTRATION SUCCESS ] : " + user.getEmail());
-			return mapper.userToUserResponseDto(user);
+
+			return mapper.userToUserRegistrationResponseDto(user);
 		} catch (Exception e) {
 			log.error("[ ERROR DURING USER SAVE ] : " + e.getMessage());
-			throw new EmailUniqueException("Email: " + userRequestDTO.getEmail() + " already exists!");
+			throw new EmailUniqueException("Email: " + userRegistrationRequestDTO.getEmail() + " already exists!");
 		}
 
 	}

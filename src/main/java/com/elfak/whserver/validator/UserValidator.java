@@ -4,20 +4,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.elfak.whserver.facade.model.request.UserRequest;
+import com.elfak.whserver.facade.model.request.UserRegistrationRequest;
 
 
 @Component
 public class UserValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return UserRequest.class.equals(aClass);
+        return UserRegistrationRequest.class.equals(aClass);
     }
 
     @Override
     public void validate(Object object, Errors errors) { // Validating confirm password and password length
 
-        UserRequest user = (UserRequest) object;
+        UserRegistrationRequest user = (UserRegistrationRequest) object;
         if (user.getPassword().length() < 6) {
             errors.rejectValue("password", "Length", "Password must be at least 6 characters");
         }

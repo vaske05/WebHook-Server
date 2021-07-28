@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponseDTO {
+public class UserRegistrationResponseDTO {
 	@NotNull
 	private String userId;
 	@NotNull

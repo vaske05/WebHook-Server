@@ -2,15 +2,15 @@ package com.elfak.whserver.facade.mapper;
 
 import org.mapstruct.Mapper;
 
-import com.elfak.whserver.facade.model.request.UserRequest;
-import com.elfak.whserver.facade.model.response.UserResponse;
-import com.elfak.whserver.service.dto.UserRequestDTO;
-import com.elfak.whserver.service.dto.UserResponseDTO;
+import com.elfak.whserver.facade.model.request.UserRegistrationRequest;
+import com.elfak.whserver.facade.model.response.UserRegistrationResponse;
+import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
+import com.elfak.whserver.service.dto.UserRegistrationResponseDTO;
 
 @Mapper(componentModel = "spring")
 public interface UserFacadeMapper {
 
-	UserRequestDTO userRequestToDto(UserRequest userRequest);
+	UserRegistrationRequestDTO userRegistrationRequestToDto(UserRegistrationRequest userRegistrationRequest);
 
-	UserResponse userDtoToResponse(UserResponseDTO userResponseDTO);
+	UserRegistrationResponse userRegistrationDtoToResponse(UserRegistrationResponseDTO userRegistrationResponseDTO);
 }
