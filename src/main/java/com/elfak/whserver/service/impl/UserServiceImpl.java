@@ -36,9 +36,10 @@ public class UserServiceImpl implements UserService {
 			userRequestDTO.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
 			User user = mapper.userRequestDtoToUser(userRequestDTO);
 			user = userRepository.save(user);
+			log.info("[ USER REGISTRATION SUCCESS ] : " + user.getEmail());
 			return mapper.userToUserResponseDto(user);
 		} catch (Exception e) {
-			log.error("Error during USER SAVE " + e.getMessage());
+			log.error("[ ERROR DURING USER SAVE ] : " + e.getMessage());
 			throw new EmailUniqueException("Email: " + userRequestDTO.getEmail() + " already exists!");
 		}
 
