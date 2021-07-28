@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class EmailUniqueExceptionResponse {
 
-    private String emailAlreadyExist;
+    private String email;
 
     public EmailUniqueExceptionResponse(String exceptionResponse) {
-        this.emailAlreadyExist = exceptionResponse;
+        this.email = exceptionResponse;
     }
 }

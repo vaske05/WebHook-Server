@@ -17,7 +17,9 @@ import com.elfak.whserver.service.dto.UserResponseDTO;
 import com.elfak.whserver.service.mapper.UserServiceMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
 			user = userRepository.save(user);
 			return mapper.userToUserResponseDto(user);
 		} catch (Exception e) {
+			log.error("Error during USER SAVE " + e.getMessage());
 			throw new EmailUniqueException("Email: " + userRequestDTO.getEmail() + " already exists!");
 		}
 
