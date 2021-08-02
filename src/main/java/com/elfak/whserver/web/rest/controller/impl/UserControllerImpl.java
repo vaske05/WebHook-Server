@@ -21,12 +21,11 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	public ResponseEntity<?> createUser(UserRegistrationRequest userRegistrationRequest, BindingResult bindingResult) {
-
 		return userFacade.createUser(userRegistrationRequest, bindingResult);
 	}
 
 	@Override
 	public ResponseEntity<?> loginUser(UserLoginRequest userLoginRequest, BindingResult bindingResult) {
-		return null;
+		return userFacade.loginUser(userLoginRequest, bindingResult);
 	}
 }
