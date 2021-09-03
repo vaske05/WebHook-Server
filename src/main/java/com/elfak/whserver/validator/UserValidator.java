@@ -1,23 +1,22 @@
 package com.elfak.whserver.validator;
 
+import com.elfak.whserver.facade.model.request.UserRegisterRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import com.elfak.whserver.facade.model.request.UserRequest;
 
 
 @Component
 public class UserValidator implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {
-        return UserRequest.class.equals(aClass);
+        return UserRegisterRequest.class.equals(aClass);
     }
 
     @Override
     public void validate(Object object, Errors errors) { // Validating confirm password and password length
 
-        UserRequest user = (UserRequest) object;
+        UserRegisterRequest user = (UserRegisterRequest) object;
         if (user.getPassword().length() < 6) {
             errors.rejectValue("password", "Length", "Password must be at least 6 characters");
         }
