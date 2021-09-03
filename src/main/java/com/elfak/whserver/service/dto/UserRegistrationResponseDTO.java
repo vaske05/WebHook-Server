@@ -1,4 +1,4 @@
-package com.elfak.whserver.facade.model.response;
+package com.elfak.whserver.service.dto;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegisterResponse {
+public class UserRegistrationResponseDTO {
 	@NotNull
 	private String userId;
 	@NotNull

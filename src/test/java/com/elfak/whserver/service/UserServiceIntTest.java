@@ -1,6 +1,5 @@
 package com.elfak.whserver.service;
 
-import com.elfak.whserver.service.dto.UserRegisterRequestDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.test.context.jdbc.Sql;
 import com.elfak.whserver.IntegrationTestPrototype;
 import com.elfak.whserver.exceptions.EmailUniqueException;
 import com.elfak.whserver.model.User;
+import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
 
 public class UserServiceIntTest extends IntegrationTestPrototype {
 
@@ -18,13 +18,13 @@ public class UserServiceIntTest extends IntegrationTestPrototype {
     @Test
     public void testCreateUser() {
         // Given
-        UserRegisterRequestDTO userRegisterRequestDTO = new UserRegisterRequestDTO();
+        UserRegistrationRequestDTO userRegistrationRequestDTO = new UserRegistrationRequestDTO();
         String email = "vaske494@gmail.com";
-        userRegisterRequestDTO.setEmail(email);
-        userRegisterRequestDTO.setFullName("Milan Vasic");
-        userRegisterRequestDTO.setPassword("Milan994!");
+        userRegistrationRequestDTO.setEmail(email);
+        userRegistrationRequestDTO.setFullName("Milan Vasic");
+        userRegistrationRequestDTO.setPassword("Milan994!");
         // When
-        userService.createUser(userRegisterRequestDTO);
+        userService.createUser(userRegistrationRequestDTO);
         // Then
         User savedUser = userService.findByEmail(email);
         Assert.assertEquals(savedUser.getEmail(), email);
@@ -35,13 +35,13 @@ public class UserServiceIntTest extends IntegrationTestPrototype {
     @Sql({"/sql/insert-users.sql"})
     public void testEmailUniqueException() {
         // Given
-        UserRegisterRequestDTO userRegisterRequestDTO = new UserRegisterRequestDTO();
+        UserRegistrationRequestDTO userRegistrationRequestDTO = new UserRegistrationRequestDTO();
         String email = "vaske@gmail.com";
-        userRegisterRequestDTO.setEmail(email);
-        userRegisterRequestDTO.setFullName("Milan Vasic");
-        userRegisterRequestDTO.setPassword("Milan994!");
+        userRegistrationRequestDTO.setEmail(email);
+        userRegistrationRequestDTO.setFullName("Milan Vasic");
+        userRegistrationRequestDTO.setPassword("Milan994!");
         // When, Then
-        Assert.assertThrows(EmailUniqueException.class, () -> userService.createUser(userRegisterRequestDTO));
+        Assert.assertThrows(EmailUniqueException.class, () -> userService.createUser(userRegistrationRequestDTO));
     }
 
     @Test
