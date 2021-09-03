@@ -5,7 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.elfak.whserver.facade.UserFacade;
-import com.elfak.whserver.facade.model.request.UserRequest;
+import com.elfak.whserver.facade.model.request.UserRegisterRequest;
 import com.elfak.whserver.web.rest.controller.UserController;
 
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class UserControllerImpl implements UserController {
 	private final UserFacade userFacade;
 
 	@Override
-	public ResponseEntity<?> createUser(UserRequest userRequest, BindingResult bindingResult) {
+	public ResponseEntity<?> createUser(UserRegisterRequest userRegisterRequest, BindingResult bindingResult) {
 
-		return userFacade.createUser(userRequest, bindingResult);
+		return userFacade.createUser(userRegisterRequest, bindingResult);
 	}
 }

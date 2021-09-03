@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
 
+import com.elfak.whserver.service.dto.UserRegisterResponseDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +13,7 @@ import com.elfak.whserver.exceptions.EmailUniqueException;
 import com.elfak.whserver.model.User;
 import com.elfak.whserver.repository.UserRepository;
 import com.elfak.whserver.service.UserService;
-import com.elfak.whserver.service.dto.UserRequestDTO;
-import com.elfak.whserver.service.dto.UserResponseDTO;
+import com.elfak.whserver.service.dto.UserRegisterRequestDTO;
 import com.elfak.whserver.service.mapper.UserServiceMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -30,16 +30,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+	public UserRegisterResponseDTO createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
 		try {
-			userRequestDTO.setSecretKey(generateUserSecretKey());
-			userRequestDTO.setPassword(bCryptPasswordEncoder.encode(userRequestDTO.getPassword()));
-			User user = mapper.userRequestDtoToUser(userRequestDTO);
+			userRegisterRequestDTO.setSecretKey(generateUserSecretKey());
+			userRegisterRequestDTO.setPassword(bCryptPasswordEncoder.encode(userRegisterRequestDTO.getPassword()));
+			User user = mapper.userRegisterRequestDtoToUser(userRegisterRequestDTO);
 			user = userRepository.save(user);
-			return mapper.userToUserResponseDto(user);
+			return mapper.userToUserRegisterResponseDto(user);
 		} catch (Exception e) {
 			log.error("Error during USER SAVE " + e.getMessage());
-			throw new EmailUniqueException("Email: " + userRequestDTO.getEmail() + " already exists!");
+			throw new EmailUniqueException("Email: " + userRegisterRequestDTO.getEmail() + " already exists!");
 		}
 
 	}
