@@ -2,20 +2,20 @@ package com.elfak.whserver.exceptions;
 
 public class InvalidLoginResponse {
 
-    private String username;
+    private String email;
     private String password;
 
     public InvalidLoginResponse() {
-        this.username = "Invalid username";
+        this.email = "Invalid email";
         this.password = "Invalid password";
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
