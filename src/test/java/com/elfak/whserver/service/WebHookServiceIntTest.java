@@ -1,6 +1,7 @@
 package com.elfak.whserver.service;
 
 import com.elfak.whserver.IntegrationTestPrototype;
+import com.elfak.whserver.enumeration.WebHookType;
 import com.elfak.whserver.model.WebHook;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,11 +22,13 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         WebHook webHook = new WebHook();
         webHook.setUser(userService.findById(0L));
         webHook.setUrl("localhost:8082/api/receive");
+        webHook.setType(WebHookType.COVID_DATA);
         // When
         webHookService.save(webHook);
         // Then
         WebHook savedWebHook = webHookService.findByUrl(webHook.getUrl());
         Assert.assertEquals(savedWebHook.getUrl(), webHook.getUrl());
+        Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
     }
 
     @Test
@@ -37,6 +40,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         WebHook webHook = webHookService.findByUrl(url);
         // Then
         Assert.assertEquals(webHook.getUrl(), url);
+        Assert.assertEquals(webHook.getType(), WebHookType.AIR_DATA);
     }
 
     @Test
@@ -48,6 +52,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         WebHook webHook = webHookService.findById(id);
         // Then
         Assert.assertEquals(webHook.getId(), id);
+        Assert.assertEquals(webHook.getType(), WebHookType.AIR_DATA);
     }
 
 }

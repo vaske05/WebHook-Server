@@ -1,5 +1,6 @@
 package com.elfak.whserver.model;
 
+import com.elfak.whserver.enumeration.WebHookType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,10 @@ public class WebHook {
 
     @Column(name = "url")
     private String url;
+
+    @Column(name = "type")
+    @Enumerated(value = EnumType.STRING)
+    private WebHookType type;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
