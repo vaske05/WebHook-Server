@@ -3,6 +3,7 @@ package com.elfak.whserver.service;
 import com.elfak.whserver.IntegrationTestPrototype;
 import com.elfak.whserver.enumeration.WebHookType;
 import com.elfak.whserver.model.WebHook;
+import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,41 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
     @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
     public void testSaveWebHook() {
         // Given
-        WebHook webHook = new WebHook();
-        webHook.setUser(userService.findById(0L));
-        webHook.setUrl("localhost:8082/api/receive");
-        webHook.setType(WebHookType.COVID_DATA);
+        WebHookCreateRequestDto webHookCreateDto = new WebHookCreateRequestDto();
+        webHookCreateDto.setName("Covid data wh");
+        webHookCreateDto.setUrl("localhost:8082/api/receive");
+        webHookCreateDto.setType(WebHookType.COVID_DATA);
+        String email = "vaske@gmail.com";
         // When
-        webHookService.save(webHook);
+        webHookService.saveOrUpdate(webHookCreateDto, email);
         // Then
-        WebHook savedWebHook = webHookService.findByUrl(webHook.getUrl());
-        Assert.assertEquals(savedWebHook.getUrl(), webHook.getUrl());
+        WebHook savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
+        Assert.assertEquals(savedWebHook.getUrl(), webHookCreateDto.getUrl());
         Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
+        Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
+        Assert.assertEquals(savedWebHook.getUser().getEmail(), email);
+        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 2);
+    }
+
+    @Test
+    @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
+    public void testUpdateWebHook() {
+        // Given
+        WebHookCreateRequestDto webHookCreateDto = new WebHookCreateRequestDto();
+        webHookCreateDto.setId(0L);
+        webHookCreateDto.setName("Covid data wh");
+        webHookCreateDto.setUrl("localhost:8082/api/receive");
+        webHookCreateDto.setType(WebHookType.COVID_DATA);
+        String email = "vaske@gmail.com";
+        // When
+        webHookService.saveOrUpdate(webHookCreateDto, email);
+        // Then
+        WebHook savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
+        Assert.assertEquals(savedWebHook.getUrl(), webHookCreateDto.getUrl());
+        Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
+        Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
+        Assert.assertEquals(savedWebHook.getUser().getEmail(), email);
+        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 1);
     }
 
     @Test

@@ -1,24 +1,45 @@
 package com.elfak.whserver.service.impl;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.elfak.whserver.model.User;
 import com.elfak.whserver.model.WebHook;
+import com.elfak.whserver.repository.UserRepository;
 import com.elfak.whserver.repository.WebHookRepository;
 import com.elfak.whserver.service.WebHookService;
-
+import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
+import com.elfak.whserver.service.mapper.WebHookServiceMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class WebHookServiceImpl implements WebHookService {
 
     private final WebHookRepository webHookRepository;
+    private final UserRepository userRepository;
+    private final WebHookServiceMapper mapper;
+
 
     @Override
     @Transactional
-    public WebHook save(WebHook webHook) {
-        return webHookRepository.save(webHook);
+    public WebHookCreateResponseDto saveOrUpdate(WebHookCreateRequestDto webHookCreateRequestDto, String email) {
+
+        WebHook webHook;
+
+        if (webHookCreateRequestDto.getId() != null) {
+            // update
+            webHook = webHookRepository.findById(webHookCreateRequestDto.getId()).orElseThrow(); // TODO: Add Web hook not found exception
+            webHook.setType(webHookCreateRequestDto.getType());
+            webHook.setName(webHookCreateRequestDto.getName());
+            webHook.setUrl(webHookCreateRequestDto.getUrl());
+        } else {
+            webHook = mapper.webHookCreateRequestDtoToWebHook(webHookCreateRequestDto);
+            User user = userRepository.findUserByEmail(email).orElseThrow(); // TODO: user not found exception
+            webHook.setUser(user);
+        }
+
+        return mapper.webHookToWebHookCreateResponseDto(webHookRepository.save(webHook));
     }
 
     @Override
