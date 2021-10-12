@@ -57,6 +57,6 @@ public class WebHookFacadeImpl implements WebHookFacade {
         // DTO -> Response
         WebHooksResponse webHooksResponse = mapper.webHooksResponseDtoToWebHooksResponse(webHooksResponseDTO);
 
-        return new ResponseEntity<>(webHooksResponse, HttpStatus.OK);
+        return new ResponseEntity<>(webHooksResponse.getWebHooks(), HttpStatus.OK);
     }
 }
