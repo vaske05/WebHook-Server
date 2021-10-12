@@ -10,4 +10,6 @@ public interface WebHookFacade {
 
     ResponseEntity<?> createWebHook(WebHookCreateRequest webHookCreateRequest, Principal principal,
                                     BindingResult bindingResult);
+
+    ResponseEntity<?> findAllUserWebHooks(Principal principal);
 }

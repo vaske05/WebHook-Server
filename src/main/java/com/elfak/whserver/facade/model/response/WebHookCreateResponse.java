@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WebHookCreateResponse {
-    Long id;
-    String name;
-    WebHookType type;
-    String url;
+    private Long id;
+    private String name;
+    private WebHookType type;
+    private String url;
 }

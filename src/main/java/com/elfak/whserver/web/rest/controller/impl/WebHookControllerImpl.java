@@ -23,4 +23,9 @@ public class WebHookControllerImpl implements WebHookController {
                                            Principal principal) {
         return webHookFacade.createWebHook(webHookCreateRequest, principal, bindingResult);
     }
+
+    @Override
+    public ResponseEntity<?> findAllUserWebHooks(Principal principal) {
+        return webHookFacade.findAllUserWebHooks(principal);
+    }
 }

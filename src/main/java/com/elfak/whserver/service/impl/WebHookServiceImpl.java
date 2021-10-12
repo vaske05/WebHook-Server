@@ -7,10 +7,13 @@ import com.elfak.whserver.repository.WebHookRepository;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
 import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import com.elfak.whserver.service.mapper.WebHookServiceMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -40,6 +43,18 @@ public class WebHookServiceImpl implements WebHookService {
         }
 
         return mapper.webHookToWebHookCreateResponseDto(webHookRepository.save(webHook));
+    }
+
+    @Override
+    @Transactional
+    public WebHooksResponseDTO findAllUserWebHooks(String email) {
+
+        List<WebHook> webHooks = userRepository.findUserByEmail(email).orElseThrow().getWebHooks(); // TODO: user not found exception
+
+        WebHooksResponseDTO webHooksResponseDTO = new WebHooksResponseDTO();
+        webHooksResponseDTO.setWebHooksDto(mapper.webHooksToWebHooksResponseDTO(webHooks));
+
+        return webHooksResponseDTO;
     }
 
     @Override
