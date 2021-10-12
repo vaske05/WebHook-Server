@@ -4,6 +4,7 @@ import com.elfak.whserver.IntegrationTestPrototype;
 import com.elfak.whserver.enumeration.WebHookType;
 import com.elfak.whserver.model.WebHook;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
         Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
         Assert.assertEquals(savedWebHook.getUser().getEmail(), email);
-        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 2);
+        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 3);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
         Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
         Assert.assertEquals(savedWebHook.getUser().getEmail(), email);
-        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 1);
+        Assert.assertEquals(savedWebHook.getUser().getWebHooks().size(), 2);
     }
 
     @Test
@@ -79,6 +80,21 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         // Then
         Assert.assertEquals(webHook.getId(), id);
         Assert.assertEquals(webHook.getType(), WebHookType.AIR_DATA);
+    }
+
+    @Test
+    @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
+    public void testFindWebHookByUserEmail() {
+        // Given
+        String email = "vaske@gmail.com";
+        // When
+        WebHooksResponseDTO webHooksResponseDTO = webHookService.findAllUserWebHooks(email);
+        // Then
+        Assert.assertEquals(webHooksResponseDTO.getWebHooksDto().size(), 2);
+        Assert.assertNotNull(webHooksResponseDTO.getWebHooksDto().get(0).getId());
+        Assert.assertNotNull(webHooksResponseDTO.getWebHooksDto().get(0).getType());
+        Assert.assertNotEquals(webHooksResponseDTO.getWebHooksDto().get(0).getName(), "");
+        Assert.assertNotEquals(webHooksResponseDTO.getWebHooksDto().get(0).getUrl(), "");
     }
 
 }

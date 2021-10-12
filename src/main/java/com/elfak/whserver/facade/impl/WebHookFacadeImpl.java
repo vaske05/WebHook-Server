@@ -4,9 +4,11 @@ import com.elfak.whserver.facade.WebHookFacade;
 import com.elfak.whserver.facade.mapper.WebHookFacadeMapper;
 import com.elfak.whserver.facade.model.request.WebHookCreateRequest;
 import com.elfak.whserver.facade.model.response.WebHookCreateResponse;
+import com.elfak.whserver.facade.model.response.WebHooksResponse;
 import com.elfak.whserver.service.ValidationErrorService;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -44,5 +46,17 @@ public class WebHookFacadeImpl implements WebHookFacade {
 
 
         return new ResponseEntity<>(webHookCreateResponse, HttpStatus.CREATED);
+    }
+
+    @Override
+    public ResponseEntity<?> findAllUserWebHooks(Principal principal) {
+
+        log.info("Web hook - find all user webHooks by email: " + principal.getName());
+
+        WebHooksResponseDTO webHooksResponseDTO = webHookService.findAllUserWebHooks(principal.getName());
+        // DTO -> Response
+        WebHooksResponse webHooksResponse = mapper.webHooksResponseDtoToWebHooksResponse(webHooksResponseDTO);
+
+        return new ResponseEntity<>(webHooksResponse, HttpStatus.OK);
     }
 }
