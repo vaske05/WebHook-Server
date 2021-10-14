@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AirQualityResponseDTO {
 
-    String status;
-    public Data data;
+    private String status;
+    private Data data;
 
     @lombok.Data
     @Builder
