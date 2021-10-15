@@ -1,16 +1,5 @@
 package com.elfak.whserver.service.impl;
 
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import com.elfak.whserver.helpers.UrlHelper;
 import com.elfak.whserver.model.dto.AirQualityRequestDTO;
 import com.elfak.whserver.model.dto.AirQualityResponseDTO;
@@ -18,8 +7,13 @@ import com.elfak.whserver.model.dto.CovidRequestDTO;
 import com.elfak.whserver.model.dto.CovidResponseDTO;
 import com.elfak.whserver.service.DataService;
 import com.neovisionaries.i18n.CountryCode;
-
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Service
@@ -54,8 +48,11 @@ public class DataServiceImpl implements DataService {
                 log.info("Successfully obtained covid data for country: " + covidRequestDTO.getCountry());
                 return response.getBody();
             }
+        } catch (IndexOutOfBoundsException e) {
+            log.error("Country code not found for given country");
+            throw new Exception(e.getMessage()); // TODO: Change to throw country not found exception
         } catch (Exception e) {
-            log.error("Error in : " + this.clone().toString() + e.getMessage(), e);
+            log.error("Error occurred during gathering covid data: " + e.getMessage(), e);
             throw new Exception(e.getMessage());
         }
     }
