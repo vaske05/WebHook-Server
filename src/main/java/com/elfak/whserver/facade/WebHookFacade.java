@@ -13,5 +13,7 @@ public interface WebHookFacade {
 
     ResponseEntity<?> findAllUserWebHooks(Principal principal);
 
+    ResponseEntity<?> getWebHookById(Long webHookId, Principal principal);
+
     ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal);
 }

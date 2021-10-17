@@ -30,6 +30,11 @@ public class WebHookControllerImpl implements WebHookController {
     }
 
     @Override
+    public ResponseEntity<?> getWebHookById(Long webHookId, Principal principal) {
+        return webHookFacade.getWebHookById(webHookId, principal);
+    }
+
+    @Override
     public ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal) {
         return webHookFacade.deleteWebHook(webHookId, principal);
     }

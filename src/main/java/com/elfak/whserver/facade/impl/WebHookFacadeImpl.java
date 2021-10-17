@@ -63,11 +63,25 @@ public class WebHookFacadeImpl implements WebHookFacade {
     }
 
     @Override
-    public ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal) {
-        Optional<WebHookDTO> optionalWebHookDTO = webHookService.findById(webHookId);
-        WebHookDTO webHookDTO = optionalWebHookDTO.orElseThrow(); // TODO: Throw wh not found exception
+    public ResponseEntity<?> getWebHookById(Long webHookId, Principal principal) {
 
-        if (!webHookDTO.getUser().getEmail().equals(principal.getName())) {
+        WebHookDTO webHookDTO = getWebHookDTO(webHookId);
+
+        if (isNotEquals(principal, webHookDTO)) {
+            //throw new NotFoundException("Web hook not found in your account");
+            log.info("Web hook not found in your account"); // TODO: Throw wh not found exception
+            return new ResponseEntity<>(new WebHookDTO(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(webHookDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal) {
+
+        WebHookDTO webHookDTO = getWebHookDTO(webHookId);
+
+        if (isNotEquals(principal, webHookDTO)) {
             //throw new NotFoundException("Web hook not found in your account");
             log.info("Web hook not found in your account"); // TODO: Throw wh not found exception
             return new ResponseEntity<>(new WebHookDTO(), HttpStatus.BAD_REQUEST);
@@ -75,5 +89,14 @@ public class WebHookFacadeImpl implements WebHookFacade {
         webHookService.delete(webHookDTO.getId());
 
         return new ResponseEntity<>("Web hook with ID: '" + webHookId + "' was deleted", HttpStatus.OK);
+    }
+
+    private WebHookDTO getWebHookDTO(Long webHookId) {
+        Optional<WebHookDTO> optionalWebHookDTO = webHookService.findById(webHookId);
+        return optionalWebHookDTO.orElseThrow(); // TODO: Throw wh not found exception
+    }
+
+    private boolean isNotEquals(Principal principal, WebHookDTO webHookDTO) {
+        return !webHookDTO.getUser().getEmail().equals(principal.getName());
     }
 }
