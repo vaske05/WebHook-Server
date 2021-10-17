@@ -1,5 +1,8 @@
 package com.elfak.whserver.exceptions;
 
+import com.elfak.whserver.exceptions.response.EmailUniqueExceptionResponse;
+import com.elfak.whserver.exceptions.response.UserNotFoundExceptionResponse;
+import com.elfak.whserver.exceptions.response.WebHookNotFoundExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
