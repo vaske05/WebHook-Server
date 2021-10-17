@@ -8,12 +8,13 @@ import org.springframework.validation.BindingResult;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ValidationErrorServiceImpl implements ValidationErrorService {
 
     @Override
-    public ResponseEntity<?> validateFields(BindingResult bindingResult) { // TODO: Try to return optional here
+    public Optional<ResponseEntity<?>> validateFields(BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
 
@@ -22,8 +23,8 @@ public class ValidationErrorServiceImpl implements ValidationErrorService {
             bindingResult.getFieldErrors()
                     .forEach(fieldError -> errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()));
 
-            return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+            return Optional.of(new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST));
         }
-        return null;
+        return Optional.empty();
     }
 }

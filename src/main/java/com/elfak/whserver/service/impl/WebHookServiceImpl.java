@@ -1,5 +1,7 @@
 package com.elfak.whserver.service.impl;
 
+import com.elfak.whserver.exceptions.UserNotFoundException;
+import com.elfak.whserver.exceptions.WebHookNotFoundException;
 import com.elfak.whserver.model.User;
 import com.elfak.whserver.model.WebHook;
 import com.elfak.whserver.repository.UserRepository;
@@ -33,13 +35,14 @@ public class WebHookServiceImpl implements WebHookService {
 
         if (webHookCreateRequestDto.getId() != null) {
             // update
-            webHook = webHookRepository.findById(webHookCreateRequestDto.getId()).orElseThrow(); // TODO: Add Web hook not found exception
+            webHook = webHookRepository.findById(webHookCreateRequestDto.getId())
+                    .orElseThrow(() -> new WebHookNotFoundException("Web hook not found with id: " + webHookCreateRequestDto.getId()));
             webHook.setType(webHookCreateRequestDto.getType());
             webHook.setName(webHookCreateRequestDto.getName());
             webHook.setUrl(webHookCreateRequestDto.getUrl());
         } else {
             webHook = mapper.webHookCreateRequestDtoToWebHook(webHookCreateRequestDto);
-            User user = userRepository.findUserByEmail(email).orElseThrow(); // TODO: user not found exception
+            User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email '" + email + "' not found."));
             webHook.setUser(user);
         }
 
@@ -50,7 +53,10 @@ public class WebHookServiceImpl implements WebHookService {
     @Transactional
     public WebHooksResponseDTO findAllUserWebHooks(String email) {
 
-        List<WebHook> webHooks = userRepository.findUserByEmail(email).orElseThrow().getWebHooks(); // TODO: user not found exception
+        List<WebHook> webHooks = userRepository
+                .findUserByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email '" + email + "' not found."))
+                .getWebHooks();
 
         WebHooksResponseDTO webHooksResponseDTO = new WebHooksResponseDTO();
         webHooksResponseDTO.setWebHooksDto(mapper.webHooksToWebHooksResponseDTO(webHooks));
@@ -61,7 +67,9 @@ public class WebHookServiceImpl implements WebHookService {
     @Override
     @Transactional
     public WebHookDTO findByUrl(String url) {
-        return mapper.webHookToWebHookDTO(webHookRepository.findWebHookByUrl(url).orElseThrow()); // TODO: WH not found exc
+        return mapper.webHookToWebHookDTO(webHookRepository
+                .findWebHookByUrl(url)
+                .orElseThrow(() -> new WebHookNotFoundException("Web hook not found with URL: " + url)));
     }
 
     @Override

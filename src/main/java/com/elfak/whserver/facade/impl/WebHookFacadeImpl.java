@@ -1,5 +1,6 @@
 package com.elfak.whserver.facade.impl;
 
+import com.elfak.whserver.exceptions.WebHookNotFoundException;
 import com.elfak.whserver.facade.WebHookFacade;
 import com.elfak.whserver.facade.mapper.WebHookFacadeMapper;
 import com.elfak.whserver.facade.model.request.WebHookCreateRequest;
@@ -33,9 +34,9 @@ public class WebHookFacadeImpl implements WebHookFacade {
     public ResponseEntity<?> createWebHook(WebHookCreateRequest webHookCreateRequest, Principal principal,
                                            BindingResult bindingResult) {
 
-        ResponseEntity<?> errorMap = errorService.validateFields(bindingResult);
-        if (errorMap != null) {
-            return errorMap;
+        Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
+        if (optionalErrorMap.isPresent()) {
+            return optionalErrorMap.get();
         }
 
         // Request -> DTO
@@ -68,9 +69,8 @@ public class WebHookFacadeImpl implements WebHookFacade {
         WebHookDTO webHookDTO = getWebHookDTO(webHookId);
 
         if (isNotEquals(principal, webHookDTO)) {
-            //throw new NotFoundException("Web hook not found in your account");
-            log.info("Web hook not found in your account"); // TODO: Throw wh not found exception
-            return new ResponseEntity<>(new WebHookDTO(), HttpStatus.BAD_REQUEST);
+            log.info("Web hook - web hook not found in your account");
+            throw new WebHookNotFoundException("Web hook not found in your account");
         }
 
         return new ResponseEntity<>(webHookDTO, HttpStatus.OK);
@@ -82,10 +82,10 @@ public class WebHookFacadeImpl implements WebHookFacade {
         WebHookDTO webHookDTO = getWebHookDTO(webHookId);
 
         if (isNotEquals(principal, webHookDTO)) {
-            //throw new NotFoundException("Web hook not found in your account");
-            log.info("Web hook not found in your account"); // TODO: Throw wh not found exception
-            return new ResponseEntity<>(new WebHookDTO(), HttpStatus.BAD_REQUEST);
+            log.info("Web hook - web hook not found in your account");
+            throw new WebHookNotFoundException("Web hook not found in your account");
         }
+
         webHookService.delete(webHookDTO.getId());
 
         return new ResponseEntity<>("Web hook with ID: '" + webHookId + "' was deleted", HttpStatus.OK);
@@ -93,7 +93,7 @@ public class WebHookFacadeImpl implements WebHookFacade {
 
     private WebHookDTO getWebHookDTO(Long webHookId) {
         Optional<WebHookDTO> optionalWebHookDTO = webHookService.findById(webHookId);
-        return optionalWebHookDTO.orElseThrow(); // TODO: Throw wh not found exception
+        return optionalWebHookDTO.orElseThrow(() -> new WebHookNotFoundException("Web hook not found with id: " + webHookId));
     }
 
     private boolean isNotEquals(Principal principal, WebHookDTO webHookDTO) {

@@ -7,6 +7,7 @@ import com.elfak.whserver.model.dto.CovidRequestDTO;
 import com.elfak.whserver.model.dto.CovidResponseDTO;
 import com.elfak.whserver.service.DataService;
 import com.neovisionaries.i18n.CountryCode;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,17 +43,17 @@ public class DataServiceImpl implements DataService {
             HttpEntity<String> entity = new HttpEntity<>(params.toString());
             ResponseEntity<CovidResponseDTO> response = restTemplate.exchange(GET_COVID_DATA_URL + countryCode, HttpMethod.GET, entity, CovidResponseDTO.class);
             if (!response.getStatusCode().is2xxSuccessful()) {
-                log.error("Error occurred during gathering covid data");
+                log.error("COVID DATA - Error occurred during gathering covid data");
                 throw new Exception();
             } else {
-                log.info("Successfully obtained covid data for country: " + covidRequestDTO.getCountry());
+                log.info("COVID DATA - Successfully obtained covid data for country: " + covidRequestDTO.getCountry());
                 return response.getBody();
             }
         } catch (IndexOutOfBoundsException e) {
-            log.error("Country code not found for given country");
-            throw new Exception(e.getMessage()); // TODO: Change to throw country not found exception
+            log.error("COVID DATA - Country code not found for given country");
+            throw new NotFoundException(e.getMessage());
         } catch (Exception e) {
-            log.error("Error occurred during gathering covid data: " + e.getMessage(), e);
+            log.error("COVID DATA - Error occurred during gathering covid data: " + e.getMessage(), e);
             throw new Exception(e.getMessage());
         }
     }
