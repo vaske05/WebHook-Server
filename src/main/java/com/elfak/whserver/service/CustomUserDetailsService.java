@@ -1,5 +1,6 @@
 package com.elfak.whserver.service;
 
+import com.elfak.whserver.exceptions.UserNotFoundException;
 import com.elfak.whserver.model.User;
 import com.elfak.whserver.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -17,11 +18,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findUserByEmail(s).orElseThrow(); // TODO: user not found exception
+        return userRepository.findUserByEmail(s).orElseThrow(() -> new UserNotFoundException("User with email '" + s + "' not found."));
     }
 
     @Transactional
     public User loadUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(); // TODO: user not found exception
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id '" + id + "' not found."));
     }
 }

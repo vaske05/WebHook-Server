@@ -1,10 +1,5 @@
 package com.elfak.whserver.facade.impl;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-
 import com.elfak.whserver.facade.UserFacade;
 import com.elfak.whserver.facade.mapper.UserFacadeMapper;
 import com.elfak.whserver.facade.model.request.UserLoginRequest;
@@ -15,9 +10,14 @@ import com.elfak.whserver.service.dto.JWTLoginSuccessResponseDTO;
 import com.elfak.whserver.service.dto.UserLoginRequestDTO;
 import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
 import com.elfak.whserver.validator.UserValidator;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,23 +35,23 @@ public class UserFacadeImpl implements UserFacade {
 		// Validate pass match
 		userValidator.validate(userRegistrationRequest, bindingResult);
 
-		ResponseEntity<?> errorMap = errorService.validateFields(bindingResult);
-		if (errorMap != null) {
-			return errorMap;
+		Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
+		if (optionalErrorMap.isPresent()) {
+			return optionalErrorMap.get();
 		}
 
 		UserRegistrationRequestDTO userRegistrationRequestDTO = mapper
-			.userRegistrationRequestToDto(userRegistrationRequest);
+				.userRegistrationRequestToDto(userRegistrationRequest);
 		return new ResponseEntity<>(mapper
-			.userRegistrationDtoToResponse(userService.createUser(userRegistrationRequestDTO)), HttpStatus.CREATED);
+				.userRegistrationDtoToResponse(userService.createUser(userRegistrationRequestDTO)), HttpStatus.CREATED);
 	}
 
 	@Override
 	public ResponseEntity<?> loginUser(UserLoginRequest userLoginRequest, BindingResult bindingResult) {
 
-		ResponseEntity<?> errorMap = errorService.validateFields(bindingResult);
-		if (errorMap != null) {
-			return errorMap;
+		Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
+		if (optionalErrorMap.isPresent()) {
+			return optionalErrorMap.get();
 		}
 
 		UserLoginRequestDTO userLoginRequestDTO = mapper.userLoginRequestToDto(userLoginRequest);

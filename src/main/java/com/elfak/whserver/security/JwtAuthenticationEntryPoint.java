@@ -1,6 +1,6 @@
 package com.elfak.whserver.security;
 
-import com.elfak.whserver.exceptions.InvalidLoginResponse;
+import com.elfak.whserver.exceptions.response.InvalidLoginResponse;
 import com.google.gson.Gson;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

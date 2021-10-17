@@ -1,4 +1,4 @@
-package com.elfak.whserver.exceptions;
+package com.elfak.whserver.exceptions.response;
 
 public class InvalidLoginResponse {
 
