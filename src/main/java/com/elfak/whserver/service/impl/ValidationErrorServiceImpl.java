@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Service
 public class ValidationErrorServiceImpl implements ValidationErrorService {
+
     @Override
     public ResponseEntity<?> validateFields(BindingResult bindingResult) { // TODO: Try to return optional here
 

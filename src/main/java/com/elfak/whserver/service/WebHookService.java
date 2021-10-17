@@ -1,9 +1,11 @@
 package com.elfak.whserver.service;
 
-import com.elfak.whserver.model.WebHook;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
 import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.WebHookDTO;
 import com.elfak.whserver.service.dto.WebHooksResponseDTO;
+
+import java.util.Optional;
 
 public interface WebHookService {
 
@@ -11,7 +13,9 @@ public interface WebHookService {
 
     WebHooksResponseDTO findAllUserWebHooks(String email);
 
-    WebHook findByUrl(String url); // TODO
+    WebHookDTO findByUrl(String url);
 
-    WebHook findById(Long id); // TODO
+    Optional<WebHookDTO> findById(Long id);
+
+    void delete(Long id);
 }

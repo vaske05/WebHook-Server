@@ -21,4 +21,10 @@ public interface WebHookController {
 
     @GetMapping(value = "/all")
     ResponseEntity<?> findAllUserWebHooks(Principal principal);
+
+    @GetMapping(value = "/get/{webHookId}")
+    ResponseEntity<?> getWebHookById(@PathVariable Long webHookId, Principal principal);
+
+    @DeleteMapping(value = "/delete/{webHookId}")
+    ResponseEntity<?> deleteWebHook(@PathVariable Long webHookId, Principal principal);
 }
