@@ -2,8 +2,8 @@ package com.elfak.whserver.service;
 
 import com.elfak.whserver.IntegrationTestPrototype;
 import com.elfak.whserver.enumeration.WebHookType;
-import com.elfak.whserver.model.WebHook;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.WebHookDTO;
 import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,8 +14,6 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
 
     @Autowired
     private WebHookService webHookService;
-    @Autowired
-    private UserService userService;
 
     @Test
     @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
@@ -29,7 +27,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         // When
         webHookService.saveOrUpdate(webHookCreateDto, email);
         // Then
-        WebHook savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
+        WebHookDTO savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
         Assert.assertEquals(savedWebHook.getUrl(), webHookCreateDto.getUrl());
         Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
         Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
@@ -50,7 +48,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         // When
         webHookService.saveOrUpdate(webHookCreateDto, email);
         // Then
-        WebHook savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
+        WebHookDTO savedWebHook = webHookService.findByUrl(webHookCreateDto.getUrl());
         Assert.assertEquals(savedWebHook.getUrl(), webHookCreateDto.getUrl());
         Assert.assertEquals(savedWebHook.getType(), WebHookType.COVID_DATA);
         Assert.assertEquals(savedWebHook.getName(), webHookCreateDto.getName());
@@ -64,7 +62,7 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         // Given
         String url = "localhost:8082/api/receive-air-data";
         // When
-        WebHook webHook = webHookService.findByUrl(url);
+        WebHookDTO webHook = webHookService.findByUrl(url);
         // Then
         Assert.assertEquals(webHook.getUrl(), url);
         Assert.assertEquals(webHook.getType(), WebHookType.AIR_DATA);
@@ -76,10 +74,12 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         // Given
         Long id = 0L;
         // When
-        WebHook webHook = webHookService.findById(id);
+        WebHookDTO webHookDTO = webHookService.findById(id).orElseThrow();
         // Then
-        Assert.assertEquals(webHook.getId(), id);
-        Assert.assertEquals(webHook.getType(), WebHookType.AIR_DATA);
+        Assert.assertEquals(webHookDTO.getId(), id);
+        Assert.assertEquals(webHookDTO.getType(), WebHookType.AIR_DATA);
+        Assert.assertNotEquals("", webHookDTO.getName());
+        Assert.assertNotEquals("", webHookDTO.getUrl());
     }
 
     @Test
@@ -95,6 +95,19 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         Assert.assertNotNull(webHooksResponseDTO.getWebHooksDto().get(0).getType());
         Assert.assertNotEquals(webHooksResponseDTO.getWebHooksDto().get(0).getName(), "");
         Assert.assertNotEquals(webHooksResponseDTO.getWebHooksDto().get(0).getUrl(), "");
+    }
+
+    @Test
+    @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
+    public void testDeleteWebHook() {
+        // Given
+        Long idToDelete = 0L;
+        Long notDeletedId = 1L;
+        // When
+        webHookService.delete(idToDelete);
+        // Then
+        Assert.assertFalse(webHookService.findById(idToDelete).isPresent());
+        Assert.assertTrue(webHookService.findById(notDeletedId).isPresent());
     }
 
 }

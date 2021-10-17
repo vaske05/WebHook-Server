@@ -7,6 +7,7 @@ import com.elfak.whserver.repository.WebHookRepository;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
 import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.WebHookDTO;
 import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import com.elfak.whserver.service.mapper.WebHookServiceMapper;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -59,13 +61,20 @@ public class WebHookServiceImpl implements WebHookService {
 
     @Override
     @Transactional
-    public WebHook findByUrl(String url) {
-        return webHookRepository.findWebHookByUrl(url).orElseThrow();
+    public WebHookDTO findByUrl(String url) {
+        return mapper.webHookToWebHookDTO(webHookRepository.findWebHookByUrl(url).orElseThrow()); // TODO: WH not found exc
     }
 
     @Override
     @Transactional
-    public WebHook findById(Long id) {
-        return webHookRepository.findById(id).orElseThrow();
+    public Optional<WebHookDTO> findById(Long id) {
+        Optional<WebHook> webHook = webHookRepository.findById(id);
+        return webHook.map(mapper::webHookToWebHookDTO);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        webHookRepository.deleteById(id);
     }
 }

@@ -12,4 +12,6 @@ public interface WebHookFacade {
                                     BindingResult bindingResult);
 
     ResponseEntity<?> findAllUserWebHooks(Principal principal);
+
+    ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal);
 }

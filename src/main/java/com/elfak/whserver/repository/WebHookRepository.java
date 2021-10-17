@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface WebHookRepository extends JpaRepository<WebHook, Long> {
 
     Optional<WebHook> findWebHookByUrl(String url);
+
+    void deleteById(Long id);
 }

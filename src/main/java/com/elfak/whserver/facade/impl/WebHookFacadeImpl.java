@@ -8,6 +8,7 @@ import com.elfak.whserver.facade.model.response.WebHooksResponse;
 import com.elfak.whserver.service.ValidationErrorService;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.WebHookDTO;
 import com.elfak.whserver.service.dto.WebHooksResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -58,5 +60,20 @@ public class WebHookFacadeImpl implements WebHookFacade {
         WebHooksResponse webHooksResponse = mapper.webHooksResponseDtoToWebHooksResponse(webHooksResponseDTO);
 
         return new ResponseEntity<>(webHooksResponse.getWebHooks(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal) {
+        Optional<WebHookDTO> optionalWebHookDTO = webHookService.findById(webHookId);
+        WebHookDTO webHookDTO = optionalWebHookDTO.orElseThrow(); // TODO: Throw wh not found exception
+
+        if (!webHookDTO.getUser().getEmail().equals(principal.getName())) {
+            //throw new NotFoundException("Web hook not found in your account");
+            log.info("Web hook not found in your account"); // TODO: Throw wh not found exception
+            return new ResponseEntity<>(new WebHookDTO(), HttpStatus.BAD_REQUEST);
+        }
+        webHookService.delete(webHookDTO.getId());
+
+        return new ResponseEntity<>("Web hook with ID: '" + webHookId + "' was deleted", HttpStatus.OK);
     }
 }
