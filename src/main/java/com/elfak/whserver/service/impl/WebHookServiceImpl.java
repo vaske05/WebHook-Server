@@ -25,7 +25,6 @@ public class WebHookServiceImpl implements WebHookService {
     private final UserRepository userRepository;
     private final WebHookServiceMapper mapper;
 
-
     @Override
     @Transactional
     public WebHookCreateResponseDto saveOrUpdate(WebHookCreateRequestDto webHookCreateRequestDto, String email) {
