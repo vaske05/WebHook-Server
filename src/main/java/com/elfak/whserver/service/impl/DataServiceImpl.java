@@ -74,14 +74,14 @@ public class DataServiceImpl implements DataService {
             String url = urlHelper.replaceStringOccurrence(uriBuilder.toUriString(), "%20", " ");
             ResponseEntity<AirQualityResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, AirQualityResponseDTO.class);
             if (!response.getStatusCode().is2xxSuccessful()) {
-                log.error("Error occurred during gathering air data");
+                log.error("AIR DATA - Error occurred during gathering air data");
                 throw new Exception();
             } else {
-                log.info("Successfully obtained air data for: " + airQualityRequestDTO.getCountry() + ", " + airQualityRequestDTO.getCity());
+                log.info("AIR DATA - Successfully obtained air data for: " + airQualityRequestDTO.getCountry() + ", " + airQualityRequestDTO.getCity());
                 return response.getBody();
             }
         } catch (Exception e) {
-            log.error("Unexpected Error: ", e);
+            log.error("AIR DATA - Unexpected Error: ", e);
             throw new Exception(e.getMessage());
         }
     }
