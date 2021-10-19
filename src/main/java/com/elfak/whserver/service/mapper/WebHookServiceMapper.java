@@ -21,4 +21,6 @@ public interface WebHookServiceMapper {
     List<WebHooksResponseDTO.WebHookResponseDTO> webHooksToWebHooksResponseDTO(List<WebHook> webHooks);
 
     WebHookDTO webHookToWebHookDTO(WebHook webHook);
+
+    List<WebHookDTO> webHookListToDTO(List<WebHook> webHooks);
 }

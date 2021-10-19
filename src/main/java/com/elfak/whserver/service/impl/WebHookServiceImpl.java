@@ -1,5 +1,6 @@
 package com.elfak.whserver.service.impl;
 
+import com.elfak.whserver.enumeration.WebHookType;
 import com.elfak.whserver.exceptions.UserNotFoundException;
 import com.elfak.whserver.exceptions.WebHookNotFoundException;
 import com.elfak.whserver.model.User;
@@ -83,5 +84,11 @@ public class WebHookServiceImpl implements WebHookService {
     @Transactional
     public void delete(Long id) {
         webHookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<WebHookDTO> findWebHooksByType(WebHookType webHookType) {
+        List<WebHook> webHooks = webHookRepository.findWebHooksByType(webHookType);
+        return mapper.webHookListToDTO(webHooks);
     }
 }

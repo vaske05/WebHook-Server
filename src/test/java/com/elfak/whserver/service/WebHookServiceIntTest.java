@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.List;
+
 public class WebHookServiceIntTest extends IntegrationTestPrototype {
 
     @Autowired
@@ -110,4 +112,13 @@ public class WebHookServiceIntTest extends IntegrationTestPrototype {
         Assert.assertTrue(webHookService.findById(notDeletedId).isPresent());
     }
 
+    @Test
+    @Sql({"/sql/insert-users.sql", "/sql/insert-web-hooks.sql"})
+    public void testFindWebHooksByType() {
+        // Given, When
+        List<WebHookDTO> webHookDTOList = webHookService.findWebHooksByType(WebHookType.COVID_DATA);
+        // Then
+        Assert.assertEquals(1, webHookDTOList.size());
+        Assert.assertEquals(webHookDTOList.get(0).getType(), WebHookType.COVID_DATA);
+    }
 }
