@@ -24,39 +24,40 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserFacadeImpl implements UserFacade {
 
-	private final UserService userService;
-	private final UserValidator userValidator;
-	private final ValidationErrorService errorService;
-	private final UserFacadeMapper mapper;
+    private final UserService userService;
+    private final UserValidator userValidator;
+    private final ValidationErrorService errorService;
+    private final UserFacadeMapper mapper;
 
-	@Override
-	public ResponseEntity<?> createUser(UserRegistrationRequest userRegistrationRequest, BindingResult bindingResult) {
+    @Override
+    public ResponseEntity<?> createUser(UserRegistrationRequest userRegistrationRequest, BindingResult bindingResult) {
 
-		// Validate pass match
-		userValidator.validate(userRegistrationRequest, bindingResult);
+        // Validate pass match
+        userValidator.validate(userRegistrationRequest, bindingResult);
 
-		Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
-		if (optionalErrorMap.isPresent()) {
-			return optionalErrorMap.get();
-		}
+        Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
+        if (optionalErrorMap.isPresent()) {
+            return optionalErrorMap.get();
+        }
 
-		UserRegistrationRequestDTO userRegistrationRequestDTO = mapper
-				.userRegistrationRequestToDto(userRegistrationRequest);
-		return new ResponseEntity<>(mapper
-				.userRegistrationDtoToResponse(userService.createUser(userRegistrationRequestDTO)), HttpStatus.CREATED);
-	}
+        UserRegistrationRequestDTO userRegistrationRequestDTO = mapper
+                .userRegistrationRequestToDto(userRegistrationRequest);
+        return new ResponseEntity<>(mapper
+                .userRegistrationDtoToResponse(userService.createUser(userRegistrationRequestDTO)), HttpStatus.CREATED);
+    }
 
-	@Override
-	public ResponseEntity<?> loginUser(UserLoginRequest userLoginRequest, BindingResult bindingResult) {
+    @Override
+    public ResponseEntity<?> loginUser(UserLoginRequest userLoginRequest, BindingResult bindingResult) {
 
-		Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
-		if (optionalErrorMap.isPresent()) {
-			return optionalErrorMap.get();
-		}
+        Optional<ResponseEntity<?>> optionalErrorMap = errorService.validateFields(bindingResult);
+        if (optionalErrorMap.isPresent()) {
+            return optionalErrorMap.get();
+        }
 
-		UserLoginRequestDTO userLoginRequestDTO = mapper.userLoginRequestToDto(userLoginRequest);
-		JWTLoginSuccessResponseDTO jwtLoginSuccessResponseDTO = userService.loginUser(userLoginRequestDTO);
+        UserLoginRequestDTO userLoginRequestDTO = mapper.userLoginRequestToDto(userLoginRequest);
+        JWTLoginSuccessResponseDTO jwtLoginSuccessResponseDTO = userService.loginUser(userLoginRequestDTO);
+        jwtLoginSuccessResponseDTO.setSecretKey(userService.findByEmail(userLoginRequest.getEmail()).getSecretKey());
 
-		return ResponseEntity.ok(mapper.jwtLoginSuccessDtoToResponse(jwtLoginSuccessResponseDTO));
-	}
+        return ResponseEntity.ok(mapper.jwtLoginSuccessDtoToResponse(jwtLoginSuccessResponseDTO));
+    }
 }

@@ -11,6 +11,8 @@ import com.elfak.whserver.service.dto.WebHookDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,10 +32,22 @@ public class DataScheduler {
     private final WebHookService webHookService;
     private final DataService dataService;
 
+    @Value("covid.data.scheduler.enabled")
+    private String covidSchedulerEnabled;
+
+    @Value("air.data.scheduler.enabled")
+    private String airSchedulerEnabled;
+
     @Scheduled(cron = "0/10 * * ? * *")
     @SchedulerLock(name = "covidScheduler", lockAtMostFor = "1s", lockAtLeastFor = "1s")
     @Transactional
     public void covidDataScheduler() {
+
+        if (Boolean.valueOf(covidSchedulerEnabled).equals(Boolean.FALSE)) {
+            log.info("COVID scheduler disabled");
+            return;
+        }
+
         System.out.println("COVID scheduler...");
 
         List<WebHookDTO> covidWebHooks = webHookService.findWebHooksByType(WebHookType.COVID_DATA);
@@ -64,7 +78,14 @@ public class DataScheduler {
     @Scheduled(cron = "0/15 * * ? * *")
     @SchedulerLock(name = "covidScheduler", lockAtMostFor = "1s", lockAtLeastFor = "1s")
     @Transactional
+    @ConditionalOnProperty(value = "air.data.scheduler.enabled", matchIfMissing = true)
     public void airDataScheduler() {
+
+        if (Boolean.valueOf(airSchedulerEnabled).equals(Boolean.FALSE)) {
+            log.info("AIR scheduler disabled");
+            return;
+        }
+
         System.out.println("AIR scheduler...");
 
         List<WebHookDTO> airWebHooks = webHookService.findWebHooksByType(WebHookType.AIR_DATA);
