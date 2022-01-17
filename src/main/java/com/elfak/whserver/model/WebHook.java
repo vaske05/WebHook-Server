@@ -29,6 +29,15 @@ public class WebHook {
     @Enumerated(value = EnumType.STRING)
     private WebHookType type;
 
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "region")
+    private String region;
+
+    @Column(name = "city")
+    private String city;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
