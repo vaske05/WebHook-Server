@@ -1,6 +1,5 @@
 package com.elfak.whserver.config;
 
-import com.elfak.whserver.helpers.Constants;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -23,7 +22,6 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager(Caffeine<Object, Object> caffeine) {
         CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
-        caffeineCacheManager.getCache(Constants.CacheNames.SELECT_DATA_CACHE);
         caffeineCacheManager.setCaffeine(caffeine);
         return caffeineCacheManager;
     }
