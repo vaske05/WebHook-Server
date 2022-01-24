@@ -2,10 +2,9 @@ package com.elfak.whserver.service;
 
 
 import com.elfak.whserver.IntegrationTestPrototype;
-import com.elfak.whserver.model.dto.AirQualityRequestDTO;
-import com.elfak.whserver.model.dto.AirQualityResponseDTO;
-import com.elfak.whserver.model.dto.CovidRequestDTO;
-import com.elfak.whserver.model.dto.CovidResponseDTO;
+import com.elfak.whserver.model.dto.*;
+import com.elfak.whserver.model.dto.vendor.AirQualityResponseDTO;
+import com.elfak.whserver.model.dto.vendor.CovidResponseDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +43,45 @@ public class DataServiceIntTest extends IntegrationTestPrototype {
         // Then
         Assert.assertEquals("Serbia", airQualityResponseDTO.getData().getCountry());
         Assert.assertEquals("Nis", airQualityResponseDTO.getData().getCity());
+    }
+
+    @Test
+    public void testGetCovidSelectCountries() {
+        // When
+        CovidSelectCountriesResponseDTO covidSelectCountriesResponseDTO = dataService.getCovidSelectCountries();
+        // Then
+        Assert.assertFalse(covidSelectCountriesResponseDTO.getCountries().isEmpty());
+    }
+
+    @Test
+    public void testGetAirQualitySelectCountries() {
+        // When
+        AirQualitySelectCountriesResponseDTO airSelectCountriesDto = dataService.getAirSelectCountries();
+        // Then
+        Assert.assertFalse(airSelectCountriesDto.getCountries().isEmpty());
+    }
+
+    @Test
+    public void testGetAirQualitySelectRegions() {
+        // Given, When
+        AirQualitySelectRegionsResponseDTO airSelectRegionsDto = dataService.getAirSelectRegions("Serbia");
+        // Then
+        Assert.assertFalse(airSelectRegionsDto.getRegions().isEmpty());
+    }
+
+    @Test
+    public void testGetAirQualitySelectCities() {
+        // Given, When
+        AirQualitySelectCitiesResponseDTO airSelectCitiesDto = dataService.getAirSelectCities("Serbia", "Central Serbia");
+        // Then
+        Assert.assertFalse(airSelectCitiesDto.getCities().isEmpty());
+    }
+
+    @Test
+    public void testGetAirQualitySelectCitiesNoData() {
+        // Given, When
+        AirQualitySelectCitiesResponseDTO airSelectCitiesDto = dataService.getAirSelectCities("Andorra", "Encamp");
+        // Then
+        Assert.assertTrue(airSelectCitiesDto.getCities().isEmpty());
     }
 }
