@@ -31,7 +31,7 @@ public class DataScheduler {
             log.info("COVID scheduler disabled");
             return;
         }
-        System.out.println("COVID scheduler...");
+        log.info("COVID scheduler...");
         dataSender.sendCovidData();
     }
 
@@ -44,7 +44,7 @@ public class DataScheduler {
             log.info("AIR scheduler disabled");
             return;
         }
-        System.out.println("AIR scheduler...");
+        log.info("AIR scheduler...");
         dataSender.sendAirQualityData();
     }
 }
