@@ -197,7 +197,7 @@ public class DataServiceImpl implements DataService {
                         .build();
             }
         } catch (Exception e) {
-            if (e.getMessage().contains("no_active_cities_found")) {
+            if (e.getMessage().contains("no_active_cities_found") || e.getMessage().contains("state_not_found")) {
                 log.info("AIR SELECT CITIES - No active cities found, country: " + country + " region: " + region);
                 return AirQualitySelectCitiesResponseDTO.builder().cities(Collections.emptyList()).build();
             }
