@@ -38,4 +38,24 @@ public class WebHookControllerImpl implements WebHookController {
     public ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal) {
         return webHookFacade.deleteWebHook(webHookId, principal);
     }
+
+    @Override
+    public ResponseEntity<?> getCovidSelectCountries() {
+        return webHookFacade.getCovidSelectCountries();
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectCountries() {
+        return webHookFacade.getAirQualitySelectCountries();
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectRegions(String country) {
+        return webHookFacade.getAirQualitySelectRegions(country);
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectCities(String country, String region) {
+        return webHookFacade.getAirQualitySelectCities(country, region);
+    }
 }
