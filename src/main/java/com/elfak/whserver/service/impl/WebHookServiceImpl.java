@@ -41,6 +41,9 @@ public class WebHookServiceImpl implements WebHookService {
             webHook.setType(webHookCreateRequestDto.getType());
             webHook.setName(webHookCreateRequestDto.getName());
             webHook.setUrl(webHookCreateRequestDto.getUrl());
+            webHook.setCountry(webHookCreateRequestDto.getCountry());
+            webHook.setRegion(webHookCreateRequestDto.getRegion());
+            webHook.setCity(webHookCreateRequestDto.getCity());
         } else {
             webHook = mapper.webHookCreateRequestDtoToWebHook(webHookCreateRequestDto);
             User user = userRepository.findUserByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email '" + email + "' not found."));
