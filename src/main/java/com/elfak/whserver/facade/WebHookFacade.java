@@ -16,4 +16,12 @@ public interface WebHookFacade {
     ResponseEntity<?> getWebHookById(Long webHookId, Principal principal);
 
     ResponseEntity<?> deleteWebHook(Long webHookId, Principal principal);
+
+    ResponseEntity<?> getCovidSelectCountries();
+
+    ResponseEntity<?> getAirQualitySelectCountries();
+
+    ResponseEntity<?> getAirQualitySelectRegions(String country);
+
+    ResponseEntity<?> getAirQualitySelectCities(String country, String region);
 }

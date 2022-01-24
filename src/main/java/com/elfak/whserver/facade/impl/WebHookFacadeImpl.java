@@ -4,8 +4,12 @@ import com.elfak.whserver.exceptions.WebHookNotFoundException;
 import com.elfak.whserver.facade.WebHookFacade;
 import com.elfak.whserver.facade.mapper.WebHookFacadeMapper;
 import com.elfak.whserver.facade.model.request.WebHookCreateRequest;
-import com.elfak.whserver.facade.model.response.WebHookCreateResponse;
-import com.elfak.whserver.facade.model.response.WebHooksResponse;
+import com.elfak.whserver.facade.model.response.*;
+import com.elfak.whserver.model.dto.AirQualitySelectCitiesResponseDTO;
+import com.elfak.whserver.model.dto.AirQualitySelectCountriesResponseDTO;
+import com.elfak.whserver.model.dto.AirQualitySelectRegionsResponseDTO;
+import com.elfak.whserver.model.dto.CovidSelectCountriesResponseDTO;
+import com.elfak.whserver.service.DataService;
 import com.elfak.whserver.service.ValidationErrorService;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
@@ -28,6 +32,7 @@ public class WebHookFacadeImpl implements WebHookFacade {
 
     private final ValidationErrorService errorService;
     private final WebHookService webHookService;
+    private final DataService dataService;
     private final WebHookFacadeMapper mapper;
 
     @Override
@@ -89,6 +94,34 @@ public class WebHookFacadeImpl implements WebHookFacade {
         webHookService.delete(webHookDTO.getId());
 
         return new ResponseEntity<>("Web hook with ID: '" + webHookId + "' was deleted", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getCovidSelectCountries() {
+        CovidSelectCountriesResponseDTO dto = dataService.getCovidSelectCountries();
+        CovidSelectCountriesResponse response = mapper.covidSelectCountriesDtoToResponse(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectCountries() {
+        AirQualitySelectCountriesResponseDTO dto = dataService.getAirSelectCountries();
+        AirQualitySelectCountriesResponse response = mapper.airQualitySelectCountriesDtoToResponse(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectRegions(String country) {
+        AirQualitySelectRegionsResponseDTO dto = dataService.getAirSelectRegions(country);
+        AirQualitySelectRegionsResponse response = mapper.airQualitySelectRegionsDtoToResponse(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getAirQualitySelectCities(String country, String region) {
+        AirQualitySelectCitiesResponseDTO dto = dataService.getAirSelectCities(country, region);
+        AirQualitySelectCitiesResponse response = mapper.airQualitySelectCitiesDtoToResponse(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private WebHookDTO getWebHookDTO(Long webHookId) {
