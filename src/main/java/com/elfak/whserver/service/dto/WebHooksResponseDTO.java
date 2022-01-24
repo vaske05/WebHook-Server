@@ -19,5 +19,8 @@ public class WebHooksResponseDTO {
         private String name;
         private WebHookType type;
         private String url;
+        private String country;
+        private String region;
+        private String city;
     }
 }

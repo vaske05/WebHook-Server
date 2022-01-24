@@ -1,4 +1,4 @@
-package com.elfak.whserver.model.dto;
+package com.elfak.whserver.model.dto.vendor;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AirQualityResponseDTO {
+public class AirQualityResponseDTO { // TODO: Create Raw of this
 
     private String status;
     private Data data;

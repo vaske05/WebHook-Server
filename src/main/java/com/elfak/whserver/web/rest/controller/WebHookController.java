@@ -27,4 +27,16 @@ public interface WebHookController {
 
     @DeleteMapping(value = "/delete/{webHookId}")
     ResponseEntity<?> deleteWebHook(@PathVariable Long webHookId, Principal principal);
+
+    @GetMapping(value = "/getCovidSelectCountries")
+    ResponseEntity<?> getCovidSelectCountries();
+
+    @GetMapping(value = "/getAirSelectCountries")
+    ResponseEntity<?> getAirQualitySelectCountries();
+
+    @GetMapping(value = "/getAirSelectRegions")
+    ResponseEntity<?> getAirQualitySelectRegions(@RequestParam String country);
+
+    @GetMapping(value = "/getAirSelectCities")
+    ResponseEntity<?> getAirQualitySelectCities(@RequestParam String country, @RequestParam String region);
 }

@@ -1,11 +1,11 @@
-package com.elfak.whserver.model.dto;
+package com.elfak.whserver.model.dto.vendor;
 
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class CovidResponseDTO {
+public class CovidResponseDTO { // TODO: Create Raw of this
     Date updated;
     String country;
     int cases;

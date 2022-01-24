@@ -19,5 +19,8 @@ public class WebHooksResponse {
         private String name;
         private WebHookType type;
         private String url;
+        private String country;
+        private String region;
+        private String city;
     }
 }
