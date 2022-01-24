@@ -2,9 +2,9 @@ package com.elfak.whserver.sender;
 
 import com.elfak.whserver.enumeration.WebHookType;
 import com.elfak.whserver.model.dto.AirQualityRequestDTO;
-import com.elfak.whserver.model.dto.AirQualityResponseDTO;
 import com.elfak.whserver.model.dto.CovidRequestDTO;
-import com.elfak.whserver.model.dto.CovidResponseDTO;
+import com.elfak.whserver.model.dto.vendor.AirQualityResponseDTO;
+import com.elfak.whserver.model.dto.vendor.CovidResponseDTO;
 import com.elfak.whserver.service.DataService;
 import com.elfak.whserver.service.WebHookService;
 import com.elfak.whserver.service.dto.WebHookDTO;
@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataSenderImpl implements DataSender {
+public class DataSenderImpl implements DataSender { // TODO: Think to refactor this class
 
     private final WebHookService webHookService;
     private final DataService dataService;
