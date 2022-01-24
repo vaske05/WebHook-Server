@@ -11,4 +11,7 @@ public class WebHookCreateRequestDto {
     String name;
     WebHookType type;
     String url;
+    String country;
+    String region;
+    String city;
 }

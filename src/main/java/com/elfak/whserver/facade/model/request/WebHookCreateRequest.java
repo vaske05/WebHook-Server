@@ -17,4 +17,8 @@ public class WebHookCreateRequest {
     WebHookType type;
     @NotBlank(message = "Url field cannot be blank")
     String url;
+    @NotBlank(message = "Please choose country")
+    String country;
+    String region;
+    String city;
 }
