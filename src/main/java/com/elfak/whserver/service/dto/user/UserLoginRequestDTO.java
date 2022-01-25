@@ -1,4 +1,4 @@
-package com.elfak.whserver.service.dto;
+package com.elfak.whserver.service.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

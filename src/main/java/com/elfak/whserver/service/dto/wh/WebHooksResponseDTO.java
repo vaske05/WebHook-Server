@@ -1,4 +1,4 @@
-package com.elfak.whserver.service.dto;
+package com.elfak.whserver.service.dto.wh;
 
 import com.elfak.whserver.enumeration.WebHookType;
 import lombok.Getter;

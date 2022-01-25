@@ -1,11 +1,11 @@
-package com.elfak.whserver.model.dto;
+package com.elfak.whserver.service.dto.airQuality;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AirQualityRequestDTO {
+public class AirQualityDataRequestDTO {
     String country;
     String state;
     String city;

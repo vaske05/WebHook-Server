@@ -2,11 +2,13 @@ package com.elfak.whserver.service.impl;
 
 import com.elfak.whserver.helpers.Constants;
 import com.elfak.whserver.helpers.UrlHelper;
-import com.elfak.whserver.model.dto.*;
-import com.elfak.whserver.model.dto.vendor.*;
 import com.elfak.whserver.service.DataService;
+import com.elfak.whserver.service.dto.airQuality.*;
+import com.elfak.whserver.service.dto.covid.*;
+import com.elfak.whserver.service.mapper.DataServiceMapper;
 import com.neovisionaries.i18n.CountryCode;
 import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DataServiceImpl implements DataService {
 
     @Value("${covid.data.url}")
@@ -41,21 +44,23 @@ public class DataServiceImpl implements DataService {
     @Value("${air.data.key}")
     private String AIR_DATA_KEY;
 
-    public CovidResponseDTO getCovidData(CovidRequestDTO covidRequestDTO) throws Exception {
+    private final DataServiceMapper mapper;
+
+    public CovidDataResponseDTO getCovidData(CovidDataRequestDTO covidDataRequestDTO) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         JSONObject params = new JSONObject();
         try {
-            CountryCode countryCode = CountryCode.findByName(covidRequestDTO.getCountry()).get(0);
+            CountryCode countryCode = CountryCode.findByName(covidDataRequestDTO.getCountry()).get(0);
             params.put("yesterday", false);
             params.put("strict", true);
             HttpEntity<String> entity = new HttpEntity<>(params.toString());
-            ResponseEntity<CovidResponseDTO> response = restTemplate.exchange(GET_COVID_DATA_URL + countryCode, HttpMethod.GET, entity, CovidResponseDTO.class);
-            if (!response.getStatusCode().is2xxSuccessful()) {
+            ResponseEntity<CovidDataResponseRaw> responseRaw = restTemplate.exchange(GET_COVID_DATA_URL + countryCode, HttpMethod.GET, entity, CovidDataResponseRaw.class);
+            if (!responseRaw.getStatusCode().is2xxSuccessful()) {
                 log.error("COVID DATA - Error occurred during gathering covid data");
                 throw new Exception();
             } else {
-                log.info("COVID DATA - Successfully obtained covid data for country: " + covidRequestDTO.getCountry());
-                return response.getBody();
+                log.info("COVID DATA - Successfully obtained covid data for country: " + covidDataRequestDTO.getCountry());
+                return mapper.covidDataResponseRawToDto(responseRaw.getBody());
             }
         } catch (IndexOutOfBoundsException e) {
             log.error("COVID DATA - Country code not found for given country");
@@ -67,7 +72,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public AirQualityResponseDTO getAirQualityData(AirQualityRequestDTO airQualityRequestDTO) throws Exception {
+    public AirQualityDataResponseDTO getAirQualityData(AirQualityDataRequestDTO airQualityDataRequestDTO) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         try {
             HttpHeaders requestHeaders = new HttpHeaders();
@@ -75,18 +80,18 @@ public class DataServiceImpl implements DataService {
             HttpEntity<String> entity = new HttpEntity<>(requestHeaders);
             UriComponentsBuilder uriBuilder = UriComponentsBuilder
                     .fromHttpUrl(GET_AIR_DATA_URL)
-                    .queryParam("city", airQualityRequestDTO.getCity())
-                    .queryParam("state", airQualityRequestDTO.getState())
-                    .queryParam("country", airQualityRequestDTO.getCountry())
+                    .queryParam("city", airQualityDataRequestDTO.getCity())
+                    .queryParam("state", airQualityDataRequestDTO.getState())
+                    .queryParam("country", airQualityDataRequestDTO.getCountry())
                     .queryParam("key", AIR_DATA_KEY);
             String url = UrlHelper.replaceStringOccurrence(uriBuilder.toUriString(), "%20", " ");
-            ResponseEntity<AirQualityResponseDTO> response = restTemplate.exchange(url, HttpMethod.GET, entity, AirQualityResponseDTO.class);
-            if (!response.getStatusCode().is2xxSuccessful()) {
+            ResponseEntity<AirQualityDataResponseRaw> rawResponse = restTemplate.exchange(url, HttpMethod.GET, entity, AirQualityDataResponseRaw.class);
+            if (!rawResponse.getStatusCode().is2xxSuccessful()) {
                 log.error("AIR DATA - Error occurred during gathering air data");
                 throw new Exception();
             } else {
-                log.info("AIR DATA - Successfully obtained air data for: " + airQualityRequestDTO.getCountry() + ", " + airQualityRequestDTO.getCity());
-                return response.getBody();
+                log.info("AIR DATA - Successfully obtained air data for: " + airQualityDataRequestDTO.getCountry() + ", " + airQualityDataRequestDTO.getCity());
+                return mapper.airQualityDataResponseRawToDto(rawResponse.getBody());
             }
         } catch (Exception e) {
             log.error("AIR DATA - Unexpected Error: ", e);

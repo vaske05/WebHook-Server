@@ -1,13 +1,13 @@
 package com.elfak.whserver.sender;
 
 import com.elfak.whserver.enumeration.WebHookType;
-import com.elfak.whserver.model.dto.AirQualityRequestDTO;
-import com.elfak.whserver.model.dto.CovidRequestDTO;
-import com.elfak.whserver.model.dto.vendor.AirQualityResponseDTO;
-import com.elfak.whserver.model.dto.vendor.CovidResponseDTO;
 import com.elfak.whserver.service.DataService;
 import com.elfak.whserver.service.WebHookService;
-import com.elfak.whserver.service.dto.WebHookDTO;
+import com.elfak.whserver.service.dto.airQuality.AirQualityDataRequestDTO;
+import com.elfak.whserver.service.dto.airQuality.AirQualityDataResponseDTO;
+import com.elfak.whserver.service.dto.covid.CovidDataRequestDTO;
+import com.elfak.whserver.service.dto.covid.CovidDataResponseDTO;
+import com.elfak.whserver.service.dto.wh.WebHookDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -42,9 +42,9 @@ public class DataSenderImpl implements DataSender { // TODO: Think to refactor t
             requestHeaders.add("API-KEY", secretKey);
 
             try {
-                CovidResponseDTO covidResponseDTO = dataService.getCovidData(new CovidRequestDTO(wh.getCountry()));
+                CovidDataResponseDTO covidDataResponseDTO = dataService.getCovidData(new CovidDataRequestDTO(wh.getCountry()));
 
-                HttpEntity<CovidResponseDTO> entity = new HttpEntity<>(covidResponseDTO, requestHeaders);
+                HttpEntity<CovidDataResponseDTO> entity = new HttpEntity<>(covidDataResponseDTO, requestHeaders);
 
                 ResponseEntity<String> response = restTemplate.postForEntity(wh.getUrl(), entity, String.class);
                 log.info(response.toString());
@@ -71,10 +71,10 @@ public class DataSenderImpl implements DataSender { // TODO: Think to refactor t
             requestHeaders.add("API-KEY", secretKey);
 
             try {
-                AirQualityResponseDTO airQualityResponseDTO =
-                        dataService.getAirQualityData(new AirQualityRequestDTO(wh.getCountry(), wh.getRegion(), wh.getCity()));
+                AirQualityDataResponseDTO airQualityDataResponseDTO =
+                        dataService.getAirQualityData(new AirQualityDataRequestDTO(wh.getCountry(), wh.getRegion(), wh.getCity()));
 
-                HttpEntity<AirQualityResponseDTO> entity = new HttpEntity<>(airQualityResponseDTO, requestHeaders);
+                HttpEntity<AirQualityDataResponseDTO> entity = new HttpEntity<>(airQualityDataResponseDTO, requestHeaders);
 
                 ResponseEntity<String> response = restTemplate.postForEntity(wh.getUrl(), entity, String.class);
                 log.info(response.toString());

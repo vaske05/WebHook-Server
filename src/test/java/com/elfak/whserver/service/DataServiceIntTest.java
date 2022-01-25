@@ -2,9 +2,10 @@ package com.elfak.whserver.service;
 
 
 import com.elfak.whserver.IntegrationTestPrototype;
-import com.elfak.whserver.model.dto.*;
-import com.elfak.whserver.model.dto.vendor.AirQualityResponseDTO;
-import com.elfak.whserver.model.dto.vendor.CovidResponseDTO;
+import com.elfak.whserver.service.dto.airQuality.*;
+import com.elfak.whserver.service.dto.covid.CovidDataRequestDTO;
+import com.elfak.whserver.service.dto.covid.CovidDataResponseDTO;
+import com.elfak.whserver.service.dto.covid.CovidSelectCountriesResponseDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,13 @@ public class DataServiceIntTest extends IntegrationTestPrototype {
     @Test
     public void testGetCovidData() throws Exception {
         // Given
-        CovidRequestDTO covidRequestDTO1 = new CovidRequestDTO();
-        CovidRequestDTO covidRequestDTO2 = new CovidRequestDTO();
-        covidRequestDTO1.setCountry("Serbia");
-        covidRequestDTO2.setCountry("Austria");
+        CovidDataRequestDTO covidDataRequestDTO1 = new CovidDataRequestDTO();
+        CovidDataRequestDTO covidDataRequestDTO2 = new CovidDataRequestDTO();
+        covidDataRequestDTO1.setCountry("Serbia");
+        covidDataRequestDTO2.setCountry("Austria");
         // When
-        CovidResponseDTO responseDTO1 = dataService.getCovidData(covidRequestDTO1);
-        CovidResponseDTO responseDTO2 = dataService.getCovidData(covidRequestDTO2);
+        CovidDataResponseDTO responseDTO1 = dataService.getCovidData(covidDataRequestDTO1);
+        CovidDataResponseDTO responseDTO2 = dataService.getCovidData(covidDataRequestDTO2);
         // Then
         Assert.assertEquals("Serbia", responseDTO1.getCountry());
         Assert.assertEquals("Austria", responseDTO2.getCountry());
@@ -31,18 +32,18 @@ public class DataServiceIntTest extends IntegrationTestPrototype {
 
     @Test
     public void testGetCovidDataThrowException() {
-        Assert.assertThrows(Exception.class, () -> dataService.getCovidData(new CovidRequestDTO("noCountry")));
+        Assert.assertThrows(Exception.class, () -> dataService.getCovidData(new CovidDataRequestDTO("noCountry")));
     }
 
     @Test
     public void testGetAirQualityData() throws Exception {
         // Given
-        AirQualityRequestDTO requestDTO = new AirQualityRequestDTO("Serbia", "Central Serbia", "Nis");
+        AirQualityDataRequestDTO requestDTO = new AirQualityDataRequestDTO("Serbia", "Central Serbia", "Nis");
         // When
-        AirQualityResponseDTO airQualityResponseDTO = dataService.getAirQualityData(requestDTO);
+        AirQualityDataResponseDTO airQualityDataResponseDTO = dataService.getAirQualityData(requestDTO);
         // Then
-        Assert.assertEquals("Serbia", airQualityResponseDTO.getData().getCountry());
-        Assert.assertEquals("Nis", airQualityResponseDTO.getData().getCity());
+        Assert.assertEquals("Serbia", airQualityDataResponseDTO.getData().getCountry());
+        Assert.assertEquals("Nis", airQualityDataResponseDTO.getData().getCity());
     }
 
     @Test

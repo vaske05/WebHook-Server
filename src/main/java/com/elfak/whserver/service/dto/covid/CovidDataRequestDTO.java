@@ -1,4 +1,4 @@
-package com.elfak.whserver.model.dto;
+package com.elfak.whserver.service.dto.covid;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CovidRequestDTO {
+public class CovidDataRequestDTO {
     String country;
 }

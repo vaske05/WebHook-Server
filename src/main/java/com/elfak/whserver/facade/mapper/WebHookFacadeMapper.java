@@ -2,13 +2,13 @@ package com.elfak.whserver.facade.mapper;
 
 import com.elfak.whserver.facade.model.request.WebHookCreateRequest;
 import com.elfak.whserver.facade.model.response.*;
-import com.elfak.whserver.model.dto.AirQualitySelectCitiesResponseDTO;
-import com.elfak.whserver.model.dto.AirQualitySelectCountriesResponseDTO;
-import com.elfak.whserver.model.dto.AirQualitySelectRegionsResponseDTO;
-import com.elfak.whserver.model.dto.CovidSelectCountriesResponseDTO;
-import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
-import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
-import com.elfak.whserver.service.dto.WebHooksResponseDTO;
+import com.elfak.whserver.service.dto.airQuality.AirQualitySelectCitiesResponseDTO;
+import com.elfak.whserver.service.dto.airQuality.AirQualitySelectCountriesResponseDTO;
+import com.elfak.whserver.service.dto.airQuality.AirQualitySelectRegionsResponseDTO;
+import com.elfak.whserver.service.dto.covid.CovidSelectCountriesResponseDTO;
+import com.elfak.whserver.service.dto.wh.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.wh.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.wh.WebHooksResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,14 +1,16 @@
-package com.elfak.whserver.model.dto.vendor;
+package com.elfak.whserver.service.dto.covid;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CovidCountriesResponseRaw {
-    private String country;
+public class CovidSelectCountriesResponseDTO {
+    private List<String> countries;
 }
