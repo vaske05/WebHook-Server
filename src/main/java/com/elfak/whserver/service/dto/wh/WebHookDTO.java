@@ -1,6 +1,7 @@
-package com.elfak.whserver.service.dto;
+package com.elfak.whserver.service.dto.wh;
 
 import com.elfak.whserver.enumeration.WebHookType;
+import com.elfak.whserver.service.dto.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 

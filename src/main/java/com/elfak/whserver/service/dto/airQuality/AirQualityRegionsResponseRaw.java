@@ -1,4 +1,4 @@
-package com.elfak.whserver.model.dto.vendor;
+package com.elfak.whserver.service.dto.airQuality;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AirQualityCountriesResponseRaw {
+public class AirQualityRegionsResponseRaw {
 
     private String status;
     private List<Data> data;
@@ -21,7 +21,7 @@ public class AirQualityCountriesResponseRaw {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Data {
-        public String country;
+        public String state;
 
     }
 }

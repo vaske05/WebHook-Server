@@ -1,13 +1,14 @@
 package com.elfak.whserver.service;
 
-import com.elfak.whserver.model.dto.*;
-import com.elfak.whserver.model.dto.vendor.AirQualityResponseDTO;
-import com.elfak.whserver.model.dto.vendor.CovidResponseDTO;
+import com.elfak.whserver.service.dto.airQuality.*;
+import com.elfak.whserver.service.dto.covid.CovidDataRequestDTO;
+import com.elfak.whserver.service.dto.covid.CovidDataResponseDTO;
+import com.elfak.whserver.service.dto.covid.CovidSelectCountriesResponseDTO;
 
 public interface DataService {
-    CovidResponseDTO getCovidData(CovidRequestDTO covidRequestDTO) throws Exception;
+    CovidDataResponseDTO getCovidData(CovidDataRequestDTO covidDataRequestDTO) throws Exception;
 
-    AirQualityResponseDTO getAirQualityData(AirQualityRequestDTO airQualityRequestDTO) throws Exception;
+    AirQualityDataResponseDTO getAirQualityData(AirQualityDataRequestDTO airQualityDataRequestDTO) throws Exception;
 
     CovidSelectCountriesResponseDTO getCovidSelectCountries();
 

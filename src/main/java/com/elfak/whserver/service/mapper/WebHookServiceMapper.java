@@ -1,10 +1,10 @@
 package com.elfak.whserver.service.mapper;
 
 import com.elfak.whserver.model.WebHook;
-import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
-import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
-import com.elfak.whserver.service.dto.WebHookDTO;
-import com.elfak.whserver.service.dto.WebHooksResponseDTO;
+import com.elfak.whserver.service.dto.wh.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.wh.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.wh.WebHookDTO;
+import com.elfak.whserver.service.dto.wh.WebHooksResponseDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;

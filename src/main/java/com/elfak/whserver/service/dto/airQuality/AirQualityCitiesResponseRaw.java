@@ -1,4 +1,4 @@
-package com.elfak.whserver.model.dto.vendor;
+package com.elfak.whserver.service.dto.airQuality;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

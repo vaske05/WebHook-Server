@@ -2,9 +2,9 @@ package com.elfak.whserver.service;
 
 import com.elfak.whserver.IntegrationTestPrototype;
 import com.elfak.whserver.enumeration.WebHookType;
-import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
-import com.elfak.whserver.service.dto.WebHookDTO;
-import com.elfak.whserver.service.dto.WebHooksResponseDTO;
+import com.elfak.whserver.service.dto.wh.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.wh.WebHookDTO;
+import com.elfak.whserver.service.dto.wh.WebHooksResponseDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

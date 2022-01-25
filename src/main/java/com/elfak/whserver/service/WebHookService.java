@@ -1,10 +1,10 @@
 package com.elfak.whserver.service;
 
 import com.elfak.whserver.enumeration.WebHookType;
-import com.elfak.whserver.service.dto.WebHookCreateRequestDto;
-import com.elfak.whserver.service.dto.WebHookCreateResponseDto;
-import com.elfak.whserver.service.dto.WebHookDTO;
-import com.elfak.whserver.service.dto.WebHooksResponseDTO;
+import com.elfak.whserver.service.dto.wh.WebHookCreateRequestDto;
+import com.elfak.whserver.service.dto.wh.WebHookCreateResponseDto;
+import com.elfak.whserver.service.dto.wh.WebHookDTO;
+import com.elfak.whserver.service.dto.wh.WebHooksResponseDTO;
 
 import java.util.List;
 import java.util.Optional;

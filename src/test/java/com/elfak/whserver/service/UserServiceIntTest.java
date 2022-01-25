@@ -1,14 +1,13 @@
 package com.elfak.whserver.service;
 
+import com.elfak.whserver.IntegrationTestPrototype;
+import com.elfak.whserver.exceptions.EmailUniqueException;
+import com.elfak.whserver.model.User;
+import com.elfak.whserver.service.dto.user.UserRegistrationRequestDTO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
-
-import com.elfak.whserver.IntegrationTestPrototype;
-import com.elfak.whserver.exceptions.EmailUniqueException;
-import com.elfak.whserver.model.User;
-import com.elfak.whserver.service.dto.UserRegistrationRequestDTO;
 
 public class UserServiceIntTest extends IntegrationTestPrototype {
 

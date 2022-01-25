@@ -1,14 +1,13 @@
-package com.elfak.whserver.service.dto;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+package com.elfak.whserver.service.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
