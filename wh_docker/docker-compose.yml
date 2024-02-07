@@ -23,7 +23,6 @@ services:
 #      - ${TOMCAT_HTTP_PORT}:8081
 #    environment:
 #      - JAVA_OPTS=-Djava.net.preferIPv4Stack=true
-#      - ZUPER_ENV=docker
 #      - JDBC_URL=jdbc:mysql://mysql:3306/
 #      - JDBC_USERNAME=${MYSQL_USERNAME}
 #      - JDBC_PASSWORD=${MYSQL_PASSWORD}
